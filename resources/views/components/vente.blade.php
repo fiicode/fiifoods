@@ -1,7 +1,10 @@
 @extends('layouts.app')
 @section('styles')
     <link rel="stylesheet" href="{{asset('assets/css/dataTables.bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/buttons.dataTables.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/sweetalert.css')}}">
+
+
     <style>
         .autocomplete-suggestions {
             border: 1px solid #e4e4e4;
@@ -27,6 +30,9 @@
 @stop
 @section('content')
     <?php $vente = session('vente') ?>
+    @if(Session::has('ventes'))
+        <?php $ventes = session('ventes') ?>
+    @endif
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -43,7 +49,7 @@
                     {{method_field('PATCH')}}
                     @else
                     <form action="{{route('ventes.store')}}" method="post">
-                        @endif
+                    @endif
                         @csrf
                         <div class="col-md-12">
                             <div class="row">
@@ -80,7 +86,7 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for=""><i class="fa fa-coffee text-primary"></i> Produit</label>
-                                        <select class="form-control select2" name="foodsName">
+                                        <select class="form-control select2" name="foodsName" id="foodsName">
                                             @foreach($produits as $produit)
                                                 @if($vente)
                                                     <option {{$produit->id == $vente->foods_name_id ? 'selected' : ''}} value="{{$produit->id}}">{{$produit->foodsName}}</option>
@@ -164,7 +170,11 @@
                         </div>
 
                         <div class="clearfix"></div>
+                    @if($vente)
                     </form>
+                    @else
+                    </form>
+                    @endif
                 </div>
             </div>
         </div>
@@ -174,22 +184,43 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="header">
-                    <h4 class="title"><i class="pe-7s-cart"></i> <span class="label label-danger">Toutes les ventes</span></h4>
+                    <h4><i class="pe-7s-cart"></i> <span class="label label-danger">Toutes les ventes</span> <a href="{{route('ventes')}}" class="btn btn-info btn-fill pull-right btn-xs"><i class="fa fa-flask"></i> Toutes les factures</a></h4>
+
+                    {{--<form action="" method="post">--}}
+                        {{--@csrf--}}
+                        {{--<div class="col-md-5 pull-right">--}}
+                            {{--<div class="col-md-3">--}}
+                                {{--<div class="controls">--}}
+                                    {{--<div class="input-prepend input-group">--}}
+                                        {{--<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>--}}
+                                        {{--<input type="text" style="width: 200px" name="reservation" id="reservation" class="form-control" value="{{Date('m')}}/01/{{Date('Y')}} - {{Date('m')}}/{{'01'}}/{{Date('Y')}}" />--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="col-md-1 pull-right">--}}
+                                {{--<button type="submit" class="btn btn-group-xs pull-right btn-primary"><i class="fa fa-flask"></i> Filtrer</button>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</form>--}}
+                    {{--<div class="clearfix"></div>--}}
                 </div>
                 <div class="content">
                     <table class="table table-hover table-striped" id="factureTable">
                         <thead>
-                        <th>ID</th>
-                        <th>N°</th>
-                        <th>Produits</th>
-                        <th>Qtt</th>
-                        <th>Unité</th>
-                        <th>Px Vente</th>
-                        <th>Rest</th>
-                        <th>Client</th>
-                        <th>Crée le</th>
-                        <th>User</th>
-                        <th>Action</th>
+                            <tr>
+                                <th>ID</th>
+                                <th>N°</th>
+                                <th>Produits</th>
+                                <th>Qtt</th>
+                                <th>Unité</th>
+                                <th>P V</th>
+                                <th>Mtt</th>
+                                <th>Rest</th>
+                                <th>Client</th>
+                                <th>Crée le</th>
+                                <th>User</th>
+                                <th>Action</th>
+                            </tr>
                         </thead>
                         <tbody>
                         @foreach($ventes as $vente)
@@ -200,6 +231,7 @@
                                 <td>{{$vente->qtt}}</td>
                                 <td>{{get_unite($vente->foodsName->foodsName)}}</td>
                                 <td>{{number_format($vente->pu)}}</td>
+                                <td>{{number_format($vente->pu * $vente->qtt)}}</td>
                                 <td class="text-danger">{{number_format($vente->reste)}}</td>
                                 <td>{{get_client_name($vente->client_id)}}</td>
                                 <td>{{$vente->created_at->format('d/m/Y H:i')}}</td>
@@ -207,6 +239,7 @@
                                 <td>
                                     <a href="{{route('ventes.show', ['vente' => $vente])}}" class="btn btn-xs btn-primary btn-simple" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></a>
                                     <a href="{{route('ventes.edit', ['vente' => $vente])}}" data-toggle="tooltip" data-placement="left" rel="tooltip" title="Supprimer" class="btn btn-danger btn-xs delete btn-simple" data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fa fa-trash"></i></a>
+                                    <a href="{{route('print', ['id' => $vente->id])}}" target="_blank" data-toggle="tooltip" data-placement="left" rel="tooltip" title="Imprimer" class="btn btn-default btn-xs btn-simple"><i class="fa fa-print"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -224,6 +257,18 @@
     <script src="{{asset('assets/js/sweetalert.min.js')}}"></script>
     <script src="{{asset('assets/js/getter-edit-sweet-alert.js')}}"></script>
     <script src="{{asset('assets/js/jquery.autocomplete.min.js')}}"></script>
+
+
+    {{--<script src="{{asset('assets/js/jquery.dataTables.bootstrap.min.js')}}"></script>--}}
+    <script src="{{asset('assets/js/dataTables.buttons.min.js')}}"></script>
+    {{--<script src="{{asset('assets/js/buttons.flash.min.js')}}"></script>--}}
+    {{--<script src="{{asset('assets/js/buttons.html5.min.js')}}"></script>--}}
+    <script src="{{asset('assets/js/buttons.print.min.js')}}"></script>
+    <script src="{{asset('assets/js/buttons.colVis.min.js')}}"></script>
+    <script src="{{asset('assets/js/dataTables.select.min.js')}}"></script>
+
+
+
     <script>
         $(document).ready(function(){
             var clients = <?= $clients; ?>;
@@ -256,7 +301,64 @@
                     });
                 }
             });
+            $('#foodsName').on('click', function () {
+                var article = $('form').find('[name="foodsName"]')[0];
+                var pu = $('form').find('[name="prixAchat"]')[0];
+                $.ajax({
+                    method: 'GET',
+                    url: '{{ route('price', ['ItemName' => 1]) }}',
+                    data: {
+                        _token: '{{ Session::token() }}',
+                        foodsId: article.value
+                    }
+                }).done(function (msg) {
+                    var prixVente = msg['pv'];
+                    // if (prixVente > 0) {
+                        pu.value = prixVente;
+                    // }
+                });
+            });
         });
+
+        // $(document).ready(function() {
+        //    $('#dynamic-table').DataTable( {
+        //         dom: 'Bfrtip',
+        //         buttons: [
+        //             //'columnsToggle'
+        //             // {
+        //             //     extend: "colvis",
+        //             //     "text": "<i class='fa fa-search bigger-110 blue'></i></span>",
+        //             //     //"className": "btn btn-white btn-primary btn-bold",
+        //             //     //columns: ':not(:first):not(:last)'
+        //             //    // postfixButtons: [ 'colvisRestore' ]
+        //             // },
+        //             {
+        //                 extend: 'columnsToggle',
+        //                 //columns: '.toggle'
+        //             },
+        //             {
+        //                 extend: 'print',
+        //                 text: 'Imprimer',
+        //                 autoPrint: false,
+        //                 //message: 'Toutes les transactions',
+        //                 customize: function ( win ) {
+        //                     $(win.document.body)
+        //                         .css( 'font-size', '10pt' )
+        //                         .prepend(
+        //                             '<img src="http://datatables.net/media/images/logo-fade.png" style="position:absolute; top:0; left:0;" />'
+        //                         );
+        //
+        //                     $(win.document.body).find( 'table' )
+        //                         .addClass( 'compact' )
+        //                         .css( 'font-size', 'inherit' );
+        //                     $(win.document.body).find('h1').css('display', 'none')
+        //                 }
+        //             },
+        //         ]
+        //     } );
+        // } )
+
+
     </script>
 @stop
 @section('notification')

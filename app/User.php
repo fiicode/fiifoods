@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Model\Depense;
 use App\Model\FoodsName;
 use App\Model\Option;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'username', 'password',
     ];
 
     /**
@@ -37,5 +38,9 @@ class User extends Authenticatable
     public function option(): HasMany
     {
         return $this->hasMany(Option::class);
+    }
+    public function depense(): HasMany
+    {
+        return $this->hasMany(Depense::class);
     }
 }

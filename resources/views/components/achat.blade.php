@@ -29,6 +29,9 @@
     <?php $achat = session('achat') ?>
     <?php $unite = session('unite') ?>
     <?php $ptds = session('produit') ?>
+    @if(Session::has('achats'))
+        <?php $achats = session('achats') ?>
+    @endif
     <div class="row">
         <div class="col-md-12">
             <div class="card" style="background-color: #FFF">
@@ -82,7 +85,7 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="">Produit</label>
-                                        <select class="form-control select2" name="foodsName">
+                                        <select class="form-control select2" name="foodsName" id="foodsName">
                                             @foreach($produits as $produit)
                                                 @if($achat)
                                                 <option {{$produit->id == $achat->foods_name_id ? 'selected' : ''}} value="{{$produit->id}}">{{$produit->foodsName}}</option>
@@ -191,7 +194,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="header">
-                    <h4 class="title"><i class="pe-7s-box1"></i><span class="label label-primary"> Toutes les achats</span></h4>
+                    <h4 class="title"><i class="pe-7s-box1"></i><span class="label label-primary"> Toutes les achats</span>  <a href="{{route('achats')}}" class="btn btn-info btn-fill pull-right btn-xs"><i class="fa fa-flask"></i> Toutes les achats</a></h4>
                 </div>
                 <div class="content">
                     <table class="table table-hover table-striped" id="orderTable">
@@ -202,6 +205,7 @@
                             <th>Qtt</th>
                             <th>Unité</th>
                             <th>Px Achat</th>
+                            <th>MTT</th>
                             <th>Rest</th>
                             <th>Fournisseurs</th>
                             <th>Crée le</th>
@@ -217,6 +221,7 @@
                                 <td>{{$achat->qtt}}</td>
                                 <td>{{get_unite($achat->foodsName->foodsName)}}</td>
                                 <td>{{number_format($achat->priceOfPurchase)}}</td>
+                                <td>{{number_format($achat->priceOfPurchase * $achat->qtt)}}</td>
                                 <td class="text-danger">{{number_format($achat->reste)}}</td>
                                 <td>{{get_founisseur_name($achat->fournisseur_id)}}</td>
                                 <td>{{$achat->created_at->format('d/m/Y H:i')}}</td>
@@ -474,6 +479,28 @@
 @stop
 @section('notification')
     <script>
+        $('#foodsName').on('click', function () {
+            var article = $('form').find('[name="foodsName"]')[0];
+            var pu = $('form').find('[name="prixAchat"]')[0];
+            var pv = $('form').find('[name="prixVente"]')[0];
+            $.ajax({
+                method: 'GET',
+                url: '{{ route('price', ['ItemName' => 1]) }}',
+                data: {
+                    _token: '{{ Session::token() }}',
+                    foodsId: article.value
+                }
+            }).done(function (msg) {
+                var prixAchat = msg['pu'];
+                var prixVente = msg['pv'];
+                // if (prixAchat > 0) {
+                    pu.value = prixAchat;
+                // }
+                // if (prixVente > 0) {
+                    pv.value = prixVente;
+                // }
+            });
+        });
         $(function () {
             $('#orderTable').DataTable()
         })

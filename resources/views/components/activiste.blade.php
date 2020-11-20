@@ -313,7 +313,7 @@
                             <tr>
                                 <td>{{$client->nom}}</td>
                                 <td>{{$client->phone}}</td>
-                                <td><span class="label label-danger">{{get_client_solde($fournisseur->id)}}</span></td>
+                                <td><span class="label label-danger">{{get_client_solde($client->id)}}</span></td>
                                 {{--<td>{{$client->created_at->format('d/m/y')}}</td>--}}
                                 {{--<td>{{$client->user->username}}</td>--}}
                                 <td>

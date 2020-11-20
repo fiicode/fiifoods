@@ -35,7 +35,8 @@ class AchatController extends Controller
                 ['deleted_at', null]
             ])->get();
         $achats = Achat::where([
-            ['deleted_at', null]
+            ['deleted_at', null],
+            ['created_at', '>=', Date('Y-m-d') . ' 00:00:00'],
         ])->get();
         $fournisseurs = Fournisseur::select('nom')->where('deleted_at', null)->get();
 

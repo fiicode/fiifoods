@@ -11,7 +11,7 @@
             <li class="{{active('home')}}">
                 <a href="{{route('home')}}">
                     <i class="pe-7s-display1"></i>
-                    <p>Dashboard</p>
+                    <p>Tableau de bord</p>
                 </a>
             </li>
             <li class="{{active('achats.index')}}">
@@ -26,32 +26,32 @@
                     <p>Ventes</p>
                 </a>
             </li>
+            <li class="{{active('historique')}}">
+                <a href="{{route('historique')}}" rel="tooltip">
+                    <i class="pe-7s-display2"></i>
+                    <p>Historiques</p>
+                </a>
+            </li>
             <li class="{{active('activiste')}}">
                 <a href="{{route('activiste')}}">
                     <i class="pe-7s-users"></i>
-                    <p>Mes activistes</p>
+                    <p>Mes Clients / Four</p>
                 </a>
             </li>
-            <li>
-                <a href="#" rel="tooltip" title="en cours développement">
-                    <i class="pe-7s-user"></i>
+            <li class="{{active('users.index')}}">
+                <a href="{{route('users.index')}}" rel="tooltip">
+                    <i class="pe-7s-add-user"></i>
                     <p>Utilisateurs</p>
                 </a>
             </li>
-            <li>
-                <a href="#" rel="tooltip" title="en cours développement">
-                    <i class="pe-7s-home"></i>
-                    <p>Mon Pipeline</p>
-                </a>
-            </li>
-            <li>
-                <a href="#" rel="tooltip" title="en cours développement">
+            <li class="{{active('depense.index')}}">
+                <a href="{{route('depense.index')}}" rel="tooltip" title="En cours de développement">
                     <i class="pe-7s-graph"></i>
                     <p>Dépenses</p>
                 </a>
             </li>
-            <li>
-                <a href="#" rel="tooltip" title="en cours développement">
+            <li class="{{active('pipeline')}}">
+                <a href="{{route('pipeline')}}">
                     <i class="pe-7s-graph1"></i>
                     <p>Rapports</p>
                 </a>

@@ -27,7 +27,8 @@ class VenteController extends Controller
                 //['inventaire', true]
             ])->orderBy('foodsName', 'asc')->get();
         $ventes = Vente::where([
-            ['deleted_at', null]
+            ['deleted_at', null],
+            ['created_at', '>=', Date('Y-m-d') . ' 00:00:00']
         ])->get();
         $clients = Client::select('nom')->where('deleted_at', null)->get();
 

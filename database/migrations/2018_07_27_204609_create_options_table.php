@@ -24,7 +24,7 @@ class CreateOptionsTable extends Migration
             $table->integer('client_id')->nullable();
             $table->integer('fournisseur_id')->nullable();
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id', 'foreign_user')->references('id')->on('users');
+            $table->foreign('user_id', 'foreign_user_options')->references('id')->on('users');
             $table->timestamps();
             $table->softDeletes();
             $table->boolean('deleted')->default(false);

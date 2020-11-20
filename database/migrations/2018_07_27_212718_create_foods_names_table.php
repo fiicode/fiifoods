@@ -20,7 +20,7 @@ class CreateFoodsNamesTable extends Migration
             $table->boolean('inventaire')->default(false);
             $table->string('avatar')->nullable();
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id', 'foreign_user')->references('id')->on('users');
+            $table->foreign('user_id', 'foreign_user_foods_names')->references('id')->on('users');
             $table->timestamps();
             $table->softDeletes();
             $table->boolean('deleted')->default(false);

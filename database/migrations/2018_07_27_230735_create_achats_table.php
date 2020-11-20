@@ -16,7 +16,7 @@ class CreateAchatsTable extends Migration
         Schema::create('achats', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('foods_name_id')->unsigned();
-            $table->foreign('foods_name_id', 'foreign_foods_name')->references('id')->on('foods_names');
+            $table->foreign('foods_name_id', 'foreign_foods_name_achats')->references('id')->on('foods_names');
             $table->string('code')->nullable();
             $table->double('qtt')->unsigned()->nullable();
             //$table->string('unity')->nullable();
@@ -24,14 +24,14 @@ class CreateAchatsTable extends Migration
             $table->double('sellingPrice')->unsigned()->nullable();// prix de vente
             $table->double('paye')->unsigned()->nullable();
             $table->integer('fournisseur_id')->unsigned()->nullable();
-            $table->foreign('fournisseur_id','foreign_fournisseur')->references('id')->on('fournisseurs');
+            $table->foreign('fournisseur_id', 'foreign_fournisseur_achats')->references('id')->on('fournisseurs');
             $table->double('mntTotalAchat')->storedAs('qtt * priceOfPurchase');
             $table->double('mntTotalVent')->storedAs('qtt * sellingPrice');
             $table->double('reste')->storedAs('mntTotalAchat - paye');
             $table->integer('order_id')->unsigned()->nullable();
-            $table->foreign('order_id','foreign_order')->references('id')->on('orders');
+            $table->foreign('order_id', 'foreign_order_achats')->references('id')->on('orders');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id', 'foreign_user')->references('id')->on('users');
+            $table->foreign('user_id', 'foreign_user_achats')->references('id')->on('users');
             $table->timestamps();
             $table->softDeletes();
             $table->boolean('deleted')->default(false);

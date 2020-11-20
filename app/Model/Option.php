@@ -9,17 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Option extends Model
 {
-    protected $fillable = [
-        'name',
-        'unite',
-        'user_id',
-        'versemFournisseur',
-        'creditFournisseur',
-        'versemClient',
-        'creditClient',
-        'client_id',
-        'fournisseur_id'
-    ];
+    protected $guarded = [];
 
     public function user(): BelongsTo
     {
@@ -29,5 +19,9 @@ class Option extends Model
     public function foodsName(): HasMany
     {
         return $this->hasMany(FoodsName::class);
+    }
+    public function depense(): HasMany
+    {
+        return $this->hasMany(Depense::class);
     }
 }

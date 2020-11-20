@@ -34,4 +34,30 @@ class CreditClientController extends Controller
 
         return redirect()->route('activiste')->with($type, 'commade supprimé');
     }
+    public function motif(Request $request)
+    {
+        $this->validate($request, [
+           'name' => 'required|min:1'
+        ]);
+        Option::firstOrcreate([
+            'name' => $request['name'],
+            'motif' => true,
+            'user_id' => \Auth::user()->id
+        ]);
+
+        return redirect()->route('depense.index')->with('success-motif', 'create');
+    }
+    public function entite(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|min:1'
+        ]);
+        Option::firstOrcreate([
+            'name' => $request['name'],
+            'entite' => true,
+            'user_id' => \Auth::user()->id
+        ]);
+
+        return redirect()->route('depense.index')->with('success-entite', 'create');
+    }
 }

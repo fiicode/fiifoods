@@ -21,18 +21,15 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-globe"></i>
                         <b class="caret hidden-sm hidden-xs"></b>
-                        <span class="notification hidden-sm hidden-xs">5</span>
+                        <span class="notification hidden-sm hidden-xs">2</span>
                         <p class="hidden-lg hidden-md">
-                            5 Notifications
+                            2 Notifications
                             <b class="caret"></b>
                         </p>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Notification 1</a></li>
-                        <li><a href="#">Notification 2</a></li>
-                        <li><a href="#">Notification 3</a></li>
-                        <li><a href="#">Notification 4</a></li>
-                        <li><a href="#">Another notification</a></li>
+                        <li><a href="#">Nouvelle vente</a></li>
+                        <li><a href="{{route('ventes.index')}}">Liste des ventes</a></li>
                     </ul>
                 </li>
                 <li>

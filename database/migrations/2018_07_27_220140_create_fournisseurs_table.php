@@ -22,7 +22,7 @@ class CreateFournisseursTable extends Migration
             $table->string('entrepris')->nullable();
             $table->string('webSite')->nullable();
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id', 'foreign_user')->references('id')->on('users');
+            $table->foreign('user_id', 'foreign_user_fournisseurs')->references('id')->on('users');
             $table->timestamps();
             $table->softDeletes();
             $table->boolean('deleted')->default(false);
