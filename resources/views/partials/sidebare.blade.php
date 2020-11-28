@@ -56,6 +56,11 @@
                     <p>Rapports</p>
                 </a>
             </li>
+            <li class="{{active('sample')}}">
+                <a href="{{route('sample')}}">
+                    <p>sample</p>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

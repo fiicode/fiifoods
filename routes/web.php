@@ -22,6 +22,7 @@ Route::group(['middleware' => ['auth']], function (){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/activiste', 'ActivisteController@index')->name('activiste');
     Route::get('/pipeline', 'PipelineController@index')->name('pipeline');
+    Route::get('/sample', 'HomeController@sample')->name('sample');
     Route::post('/pipeline', 'PipelineController@recherche')->name('recherche');
     Route::resource('achats', 'AchatController');
     Route::resource('ventes', 'VenteController');
