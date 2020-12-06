@@ -8,6 +8,9 @@ use App\Model\Fournisseur;
 use App\Model\Option;
 use App\Model\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class AchatController extends Controller
 {
