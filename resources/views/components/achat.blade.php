@@ -194,7 +194,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="header">
-                    <h4 class="title"><i class="pe-7s-box1"></i><span class="label label-primary"> Toutes les achats</span>  <a href="{{route('achats')}}" class="btn btn-info btn-fill pull-right btn-xs"><i class="fa fa-flask"></i> Toutes les achats</a></h4>
+                    <h4 class="title"><i class="pe-7s-box1"></i><span class="label label-primary"> Tous les achats</span>  <a href="{{route('achats')}}" class="btn btn-info btn-fill pull-right btn-xs"><i class="fa fa-flask"></i> Toutes les achats</a></h4>
                 </div>
                 <div class="content">
                     <table class="table table-hover table-striped" id="orderTable">
@@ -371,7 +371,7 @@
         <div class="col-md-5">
             <div class="card">
                 <div class="header">
-                    <h4 class="title"><span class="label label-primary">Tous les unités</span></h4>
+                    <h4 class="title"><span class="label label-primary">Toutes les unités</span></h4>
                 </div>
                 <div class="content">
                     <table class="table table-hover table-striped" id="uniteTable">
@@ -382,17 +382,17 @@
                         <th>Action</th>
                         </thead>
                         <tbody>
-                        @foreach($options as $unite)
-                            <tr>
-                                <td>{{$unite->name}}</td>
-                                <td>{{$unite->created_at->format('d/m/y')}}</td>
-                                <td>{{$unite->user->username}}</td>
-                                <td>
-                                    <a href="{{route('option.show', ['option' => $unite])}}" class="btn btn-xs btn-primary btn-simple" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></a>
-                                    <a href="{{route('option.edit', ['option' => $unite])}}" data-toggle="tooltip" data-placement="left" rel="tooltip" title="Supprimer" class="btn btn-danger btn-xs delete btn-simple" data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @foreach($options as $unite)
+                                <tr>
+                                    <td>{{$unite->name}}</td>
+                                    <td>{{$unite->created_at->format('d/m/y')}}</td>
+                                    <td>{{$unite->user->username}}</td>
+                                    <td>
+                                        <a href="{{route('option.show', ['option' => $unite])}}" class="btn btn-xs btn-primary btn-simple" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></a>
+                                        <a href="{{route('option.edit', ['option' => $unite])}}" data-toggle="tooltip" data-placement="left" rel="tooltip" title="Supprimer" class="btn btn-danger btn-xs delete btn-simple" data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
 
@@ -407,27 +407,27 @@
                 <div class="content">
                     <table class="table table-hover table-striped" id="produitTable">
                         <thead>
-                        <th>Nom</th>
-                        <th>Unité</th>
-                        <th>ITR</th>
-                        <th>Le</th>
-                        <th>User</th>
-                        <th>Action</th>
+                            <th>Nom</th>
+                            <th>Unité</th>
+                            <th>ITR</th>
+                            <th>Le</th>
+                            <th>User</th>
+                            <th>Action</th>
                         </thead>
                         <tbody>
-                        @foreach($produits as $produit)
-                            <tr>
-                                <td>{{$produit->foodsName}}</td>
-                                <td>{{get_unite($produit->foodsName)}}</td>
-                                <td>{{$produit->inventaire ? 'Oui' : 'Non'}}</td>
-                                <td>{{$produit->created_at->format('d/m/y')}}</td>
-                                <td>{{$produit->user->username}}</td>
-                                <td>
-                                    <a href="{{route('foodsName.show', ['foodsName' => $produit])}}" class="btn btn-xs btn-primary btn-simple" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></a>
-                                    <a href="{{route('foodsName.edit', ['foodsName' => $produit])}}" data-toggle="tooltip" data-placement="left" rel="tooltip" title="Supprimer" class="btn btn-danger btn-xs delete btn-simple" data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @foreach($produits as $produit)
+                                <tr>
+                                    <td>{{$produit->foodsName}}</td>
+                                    <td>{{get_unite($produit->foodsName)}}</td>
+                                    <td>{{$produit->inventaire ? 'Oui' : 'Non'}}</td>
+                                    <td>{{$produit->created_at->format('d/m/y')}}</td>
+                                    <td>{{$produit->user->username}}</td>
+                                    <td>
+                                        <a href="{{route('foodsName.show', ['foodsName' => $produit])}}" class="btn btn-xs btn-primary btn-simple" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></a>
+                                        <a href="{{route('foodsName.edit', ['foodsName' => $produit])}}" data-toggle="tooltip" data-placement="left" rel="tooltip" title="Supprimer" class="btn btn-danger btn-xs delete btn-simple" data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
 
@@ -534,10 +534,12 @@
 
         }
     </script>
+
     @if(Session::has('success-option'))
-    <script type="text/javascript">
-        notification('success', 'Option');
-    </script>
+        <script type="text/javascript">
+            notification('success', 'Option');
+            
+        </script>
     @endif
     @if(Session::has('error-option'))
     <script type="text/javascript">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+// use App\Http\Controllers\Auth;
 use App\Model\Achat;
 use App\Model\FoodsName;
 use App\Model\Fournisseur;
@@ -9,8 +10,6 @@ use App\Model\Option;
 use App\Model\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-
 
 class AchatController extends Controller
 {
@@ -98,6 +97,7 @@ class AchatController extends Controller
                     ['phone', $request['phone']]
                 ])->get()->first();
             }
+            
         }
         if ($request['orderId']) {
             $orderId = Order::where([
@@ -195,6 +195,7 @@ class AchatController extends Controller
                 ])->get()->first();
             }
         }
+        
         if ($request['orderId']) {
             $orderId = Order::where([
                 ['orderNum', $request['orderId']],
@@ -244,6 +245,7 @@ class AchatController extends Controller
      */
     public function destroy(Achat $achat)
     {
-        dd($achat);
+        $achat->delete();
+        return back();
     }
 }
