@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Achat;
 use App\Model\FoodsName;
+use App\Model\Search;
 use App\Model\Vente;
 use Illuminate\Http\Request;
 
@@ -66,7 +67,11 @@ class HomeController extends Controller
             $foodsName[get_foodsName($foods->foods_name_id)][$ventes->where('foods_name_id', $foods->foods_name_id)->sum('qtt')] = $ventes->where('foods_name_id', $foods->foods_name_id)->sum('mtt');
         }
         $ventes = collect($foodsName);
+
+        $searchs = Search::select('search')->orderBy('search', 'desc')->limit(5)->get();;
+
         return view('home', compact('ventes', 'stocks'));
+
     }
 
     public function sample() {
