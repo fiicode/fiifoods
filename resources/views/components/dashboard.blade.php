@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        {{-- <div class="col-md-4">
             <div class="row">
                 @if((!$searchs->isEmpty() > 0))
                     <div class="card ">
@@ -59,7 +59,7 @@
                         <div class="content">
                             <ul>
                                 @foreach($searchs as $search)
-                                    <li>{{$search->search }}</li> {{-- recupere moi le title seulement et pour le lien recupere le id  --}}
+                                    <li>{{$search->search }}</li> 
                                 @endforeach
                             </ul>
                         
@@ -73,8 +73,8 @@
                         </button>
                     </div>
                 @endif
-            </div>
-        </div>
+            </div> 
+        </div> --}}
     </div>  
     @if(Session::has('achats') || Session::has('clients') || Session::has('depenses') || 
         Session::has('factures') || Session::has('foods_names') || Session::has('fournisseurs')  || 

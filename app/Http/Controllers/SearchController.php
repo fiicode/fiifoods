@@ -25,8 +25,8 @@ class SearchController extends Controller
      */
     public function index()
     {
-      
-        // return view('home')->with('searchs', $searchs);
+        $searchs = Search::all();
+        return view('home')->with('searchs', $searchs);
       
     }
 
@@ -48,14 +48,7 @@ class SearchController extends Controller
      */
     public function store(Request $request)
     {
-        // $search = request()->validate([
-        //     'search' => 'required'
-        // ]);
         $search = request('search');
-
-        // Validator::make(
-        //     ['search' => 'required']
-        // )->validate();
 
         $this->validate($request, ['search' => 'required']);
         
