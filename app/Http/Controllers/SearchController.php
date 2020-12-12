@@ -53,7 +53,7 @@ class SearchController extends Controller
         $this->validate($request, ['search' => 'required']);
         
         // dd($search);
-        $achats = Achat::select('id')
+        $achats = Achat::select('id', 'qtt', 'code', 'foods_name_id', 'priceOfPurchase', 'sellingPrice', 'reste', 'mntTotalAchat', 'mntTotalVent', 'created_at')
             ->where('foods_name_id','Like', '%'.$search. '%')
             ->OrWhere('code', 'Like', '%' . $search . '%')
             ->OrWhere('qtt', 'Like', '%' . $search . '%')
@@ -66,7 +66,6 @@ class SearchController extends Controller
             ->OrWhere('reste', 'Like', '%' . $search . '%')
             ->OrWhere('order_id', 'Like', '%' . $search . '%')
             ->OrWhere('user_id', 'Like', '%' . $search . '%')
-            ->OrWhere('mntTotalVent', 'Like', '%' . $search . '%')
             ->OrWhere('created_at', 'Like', '%' . $search . '%')
             ->OrWhere('updated_at', 'Like', '%' . $search . '%')
             ->OrWhere('deleted_at', 'Like', '%' . $search . '%')
@@ -76,7 +75,7 @@ class SearchController extends Controller
 
         // dd($achats);
 
-        $clients = Client::select('id')
+        $clients = Client::select('id', 'nom', 'phone', 'email', 'created_at')
             ->where('nom', 'Like', '%' . $search . '%')
             ->OrWhere('adress', 'Like', '%' . $search . '%')
             ->OrWhere('phone', 'Like', '%' . $search . '%')
@@ -94,7 +93,7 @@ class SearchController extends Controller
         // dd($clients);
 
 
-        $depenses = Depense::select('id')
+        $depenses = Depense::select('id', 'montant', 'description', 'created_at')
             ->where('description', 'Like', '%' . $search . '%')
             ->OrWhere('montant', 'Like', '%' . $search . '%')
             ->OrWhere('entite', 'Like', '%' . $search . '%')
@@ -109,7 +108,7 @@ class SearchController extends Controller
 
         // dd($depenses);
 
-        $factures = Facture::select('id')
+        $factures = Facture::select('id', 'factureNum', 'user_id', 'created_at')
             ->where('factureNum', 'Like', '%' . $search . '%')
             ->OrWhere('user_id', 'Like', '%' . $search . '%')
             ->OrWhere('created_at', 'Like', '%' . $search . '%')
@@ -120,7 +119,7 @@ class SearchController extends Controller
             ->get();
         // dd($factures);
 
-        $foods_names = FoodsName::select('id')
+        $foods_names = FoodsName::select('id', 'foodsName', 'inventaire', 'created_at')
             ->where('foodsName', 'Like', '%' . $search . '%')
             ->OrWhere('unite_id', 'Like', '%' . $search . '%')
             ->OrWhere('inventaire', 'Like', '%' . $search . '%')
@@ -135,7 +134,7 @@ class SearchController extends Controller
             
         // dd($foods_name);
 
-        $fournisseurs = Fournisseur::select('id')
+        $fournisseurs = Fournisseur::select('id', 'nom', 'phone', 'created_at')
             ->where('nom', 'Like', '%' . $search . '%')
             ->OrWhere('adress', 'Like', '%' . $search . '%')
             ->OrWhere('phone', 'Like', '%' . $search . '%')
@@ -152,7 +151,7 @@ class SearchController extends Controller
 
         // dd($fournisseurs);
 
-        $membres = Membre::select('id')
+        $membres = Membre::select('id', 'nom', 'phone', 'created_at')
             ->where('nom', 'Like', '%' . $search . '%')
             ->OrWhere('adress', 'Like', '%' . $search . '%')
             ->OrWhere('phone', 'Like', '%' . $search . '%')
@@ -169,7 +168,7 @@ class SearchController extends Controller
 
         // dd($membres);
 
-        $options = Option::select('id')
+        $options = Option::select('id', 'name', 'motif', 'created_at')
             ->where('name', 'Like', '%' . $search . '%')
             ->OrWhere('unite', 'Like', '%' . $search . '%')
             ->OrWhere('entite', 'Like', '%' . $search . '%')
@@ -190,7 +189,7 @@ class SearchController extends Controller
 
         // dd($options);
 
-        $orders = Order::select('id')
+        $orders = Order::select('id', 'orderNum', 'user_id',  'created_at')
             ->where('orderNum', 'Like', '%' . $search . '%')
             ->OrWhere('user_id', 'Like', '%' . $search . '%')
             ->OrWhere('created_at', 'Like', '%' . $search . '%')
@@ -202,7 +201,7 @@ class SearchController extends Controller
 
         // dd($orders);
 
-        $ventes = Vente::select('id')
+        $ventes = Vente::select('id', 'foods_name_id' ,'factureNum', 'qtt', 'pu', 'mtt', 'reste', 'created_at')
             ->where('foods_name_id', 'Like', '%' . $search . '%')
             ->OrWhere('factureNum', 'Like', '%' . $search . '%')
             ->OrWhere('qtt', 'Like', '%' . $search . '%')
@@ -219,71 +218,91 @@ class SearchController extends Controller
             ->OrWhere('deleted', 'Like', '%' . $search . '%')
             ->OrWhere('archived', 'Like', '%' . $search . '%')
             ->get();
-            
+        
         // dd($ventes);
 
         Search::create([
             'search' => $search
         ]);
 
-        
+
+        // $searchs = Search::select('search');
+
         return redirect()->route('home')
             ->with('achats',$achats)
             ->with('clients', $clients)
             ->with('depenses', $depenses)
             ->with('factures', $factures)
             ->with('foods_names', $foods_names)
-            ->with('founisseurs', $fournisseurs)
-            ->withs('membres', $membres)
+            ->with('fournisseurs', $fournisseurs)
+            ->with('membres', $membres)
             ->with('options',$options)
             ->with('orders', $orders)
             ->with('ventes', $ventes)
+            // ->with('searchs', $searchs)
             
         ;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    // /**
+    //  * Display the specified resource.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function show($id)
+    // {
+    //     //
+    // }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    // /**
+    //  * Show the form for editing the specified resource.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function edit($id)
+    // {
+    //     //
+    // }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    // /**
+    //  * Update the specified resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function update(Request $request, $id)
+    // {
+    //     //
+    // }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    // /**
+    //  * Remove the specified resource from storage.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function destroy($id)
+    // {
+    //     //
+    // }
+
+    public function showachat(Achat $achat)
     {
-        //
+        ///$achat = Achat::all()->where('id', $request['id']);
+        // dd($achat);
+        // ->where('foods_name_id', $request['foodsId'])
+        // ->where('deleted_at', null)
+            // ->get()->last();
+        //dd($id);
+        //$achat = Achat::find($id);
+
+        // return redirect()->route('activiste')->with('fournisseurtVersemnt', $id);
+        // return redirect()->route('activiste')->with('fournisseur', $fournisseur);
+
+        // return view('components.rechercheachat', compact('achat'));
+        return view('components.showachat')->with('achat', $achat);
     }
 }
