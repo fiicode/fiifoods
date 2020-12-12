@@ -50,7 +50,7 @@
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="form-group {{$errors->has('name') ? 'has-error' : ''}}">
-                                                <label for=""><i class="fa fa-user text-danger"></i> Nom Founisseur</label>
+                                                <label for=""><i class="fa fa-user text-danger"></i> Nom Utilisateur</label>
                                                 @if($user)
                                                     <input type="text" class="form-control" placeholder="Ex. Joe" name="name" id="name" value="{{old('name')? old('name') : $user->name}}">
                                                 @else

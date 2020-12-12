@@ -8,13 +8,14 @@ use App\Model\Fournisseur;
 use App\Model\Option;
 use App\Model\Order;
 use App\Model\Vente;
+use Illuminate\Support\Facades\Route;
 
 /**
  * @param $route
  * @return string
  */
 function active($route){
-    return \Route::is($route) ? 'active' : '';
+    return Route::is($route) ? 'active' : '';
 }
 
 /**
@@ -295,12 +296,12 @@ function get_stock_all() {
         }
     }
     $mtt = 0;
-    foreach($stocks as $stock=>$value) {
+    foreach ($stocks as $stock => $value) {
         $pa = Achat::select('priceOfPurchase')
-            ->where([
-                ['deleted_at', null],
-                ['foods_name_id', $stock]
-            ])->get()->last();
+        ->where([
+            ['deleted_at', null],
+            ['foods_name_id', $stock]
+        ])->get()->last();
         $mtt += $value * $pa->priceOfPurchase;
     }
     return number_format($mtt);

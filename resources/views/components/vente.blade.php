@@ -114,11 +114,11 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group {{$errors->has('prixAchat') ? 'has-error' : ''}}">
-                                        <label for="">Prix d'vente</label>
+                                        <label for="">Prix de vente</label>
                                         @if($vente)
-                                            <input type="text" class="form-control" placeholder="Prix Achat" name="prixAchat" value="{{old('prixAchat')? old('prixAchat') : $vente->pu}}" required>
+                                            <input type="text" class="form-control" placeholder="Prix Vente" name="prixAchat" value="{{old('prixAchat')? old('prixAchat') : $vente->pu}}" required>
                                         @else
-                                            <input type="text" class="form-control" placeholder="Prix Achat" name="prixAchat" value="{{old('prixAchat')}}" required>
+                                            <input type="text" class="form-control" placeholder="Prix Vente" name="prixAchat" value="{{old('prixAchat')}}" required>
                                         @endif
                                     </div>
                                     @if($errors->has('prixAchat'))
@@ -401,6 +401,7 @@
             notification('warning', 'Facture existe déjà');
         </script>
     @endif
+    
     @if(Session::has('supression-facture'))
         <script type="text/javascript">
             notification('danger', 'Facture suprimée');

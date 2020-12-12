@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="header">
-                    <h4 class="title"><i class="pe-7s-box1"></i><span class="label label-primary"> Toutes les achats</span></h4>
+                    <h4 class="title"><i class="pe-7s-box1"></i><span class="label label-primary"> Tous les achats</span></h4>
                 </div>
                 <div class="content">
                     <table class="table table-hover table-striped" id="orderTable">
@@ -135,6 +135,7 @@
         $(function () {
             $('#factureTable').DataTable()
         })
+        
     </script>
 
 @stop

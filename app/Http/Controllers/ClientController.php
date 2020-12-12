@@ -14,7 +14,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+              
     }
 
     /**
@@ -79,7 +79,7 @@ class ClientController extends Controller
     {
         $client->deleted_at = Date('Y-m-d H:i:s');
         $client->update();
-        return redirect()->route('activiste')->with('supression-client', 'commade supprimé');
+        return redirect()->route('activiste')->with('supression-client', 'client supprimé');
     }
 
     /**
@@ -94,7 +94,7 @@ class ClientController extends Controller
         $client->nom = $request['nomClient'];
         $client->phone = $request['phoneClient'];
         $client->update();
-        return redirect()->route('activiste')->with('modification-client', 'commade supprimé');
+        return redirect()->route('activiste')->with('modification-client', 'client supprimé');
     }
 
     /**

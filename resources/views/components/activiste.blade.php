@@ -138,7 +138,7 @@
                     @elseif($client)
                         <h5 class="title text-primary"><i class="fa fa-cart-arrow-down text-info"></i> <span class="label label-info">Modification {{$client->nom}}</span></h5>
                     @else
-                        <h4 class="title"><i class="fa fa-users text-info"></i> <span class="label label-info">Ajouter (Fournisseur, Client)</span></h4>
+                        <h4 class="title text-center"><i class="fa fa-users text-info"></i> <span class="label label-info">Ajouter (Fournisseur, Client)</span></h4>
                     @endif
                 </div>
                 <div class="content">
@@ -193,61 +193,61 @@
                                          </div>
                                      </div>
 
-                                 <div class="clearfix"></div>
-                             </form>
-                         </div>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
                          <div class="col-md-6">
-                             @if($client)
-                                 <form action="{{route('client.update', ['vente' => $client])}}" method="post">
-                                     {{method_field('PATCH')}}
-                                     @else
-                                         <form action="{{route('client.store')}}" method="post">
-                                             @endif
-                                             @csrf
-                                             <div class="row">
-                                                 <div class="col-md-6">
-                                                     <div class="form-group {{$errors->has('nomClient') ? 'has-error' : ''}}">
-                                                         <label for=""><i class="fa fa-user text-primary"></i> Nom Client</label>
-                                                         @if($client)
-                                                             <input type="text" class="form-control" placeholder="Ex. Amadou" name="nomClient" id="nomClient" value="{{old('nomClient')? old('nomClient') : $client->nom}}">
-                                                         @else
-                                                             <input type="text" class="form-control" placeholder="Ex. Amadou" name="nomClient" id="nomClient" value="{{old('nomClient')}}">
-                                                         @endif
-                                                     </div>
-                                                     @if($errors->has('nomClient'))
-                                                         <span class="text-danger">
-                                            <p style="font-size: 11px">{{$errors->first('nomClient')}}</p>
-                                        </span>
-                                                     @endif
-                                                 </div>
-                                                 <div class="col-md-4" id="clientPhone">
-                                                     <div class="form-group {{$errors->has('phoneClient') ? 'has-error' : ''}}">
-                                                         <label for=""><i class="fa fa-phone text-primary"></i> Téléphone</label>
-                                                         @if($client)
-                                                             <input type="text" class="form-control" placeholder="623 964 837" name="phoneClient" id="phoneClient" value="{{old('phoneClient') ? old('phoneClient') : $client->phone}}">
-                                                         @else
-                                                             <input type="text" class="form-control" placeholder="623 964 837" name="phoneClient" id="phoneClient" value="{{old('phoneClient')}}">
-                                                         @endif
-                                                     </div>
-                                                     @if($errors->has('phoneClient'))
-                                                         <span class="text-danger">
-                                            <p style="font-size: 11px">{{$errors->first('phoneClient')}}</p>
-                                        </span>
-                                                     @endif
-                                                 </div>
-                                                 <div class="col-md-2">
-                                                     <br>
-                                                     @if($client)
-                                                         <button type="submit" class="btn btn-primary btn-xs" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></button>
-                                                         <a href="{{route('activiste')}}" class="btn btn-danger btn-xs" rel="tooltip" title="Fermer"><i class="fa fa-close"></i></a>
-                                                     @else
-                                                         <button type="submit" class="btn btn-primary btn-fill" rel="tooltip" title="Enregister"><i class="fa fa-save"></i></button>
-                                                     @endif
-                                                 </div>
-                                             </div>
+                            @if($client)
+                                <form action="{{route('client.update', ['vente' => $client])}}" method="post">
+                                    {{method_field('PATCH')}}
+                                    @else
+                                        <form action="{{route('client.store')}}" method="post">
+                                    @endif
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group {{$errors->has('nomClient') ? 'has-error' : ''}}">
+                                                    <label for=""><i class="fa fa-user text-primary"></i> Nom Client</label>
+                                                    @if($client)
+                                                        <input type="text" class="form-control" placeholder="Ex. Amadou" name="nomClient" id="nomClient" value="{{old('nomClient')? old('nomClient') : $client->nom}}">
+                                                    @else
+                                                        <input type="text" class="form-control" placeholder="Ex. Amadou" name="nomClient" id="nomClient" value="{{old('nomClient')}}">
+                                                    @endif
+                                                </div>
+                                                @if($errors->has('nomClient'))
+                                                    <span class="text-danger">
+                                                        <p style="font-size: 11px">{{$errors->first('nomClient')}}</p>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            <div class="col-md-4" id="clientPhone">
+                                                <div class="form-group {{$errors->has('phoneClient') ? 'has-error' : ''}}">
+                                                    <label for=""><i class="fa fa-phone text-primary"></i> Téléphone</label>
+                                                    @if($client)
+                                                        <input type="text" class="form-control" placeholder="623 964 837" name="phoneClient" id="phoneClient" value="{{old('phoneClient') ? old('phoneClient') : $client->phone}}">
+                                                    @else
+                                                        <input type="text" class="form-control" placeholder="623 964 837" name="phoneClient" id="phoneClient" value="{{old('phoneClient')}}">
+                                                    @endif
+                                                </div>
+                                                @if($errors->has('phoneClient'))
+                                                    <span class="text-danger">
+                                                        <p style="font-size: 11px">{{$errors->first('phoneClient')}}</p>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            <div class="col-md-2">
+                                                <br>
+                                                @if($client)
+                                                    <button type="submit" class="btn btn-primary btn-xs" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></button>
+                                                    <a href="{{route('activiste')}}" class="btn btn-danger btn-xs" rel="tooltip" title="Fermer"><i class="fa fa-close"></i></a>
+                                                @else
+                                                    <button type="submit" class="btn btn-primary btn-fill" rel="tooltip" title="Enregister"><i class="fa fa-save"></i></button>
+                                                @endif
+                                            </div>
+                                        </div>
 
-                                             <div class="clearfix"></div>
-                                         </form>
+                                        <div class="clearfix"></div>
+                                    </form>
                          </div>
                      </div>
                 </div>
@@ -465,12 +465,12 @@
 
     @if(Session::has('success-fournisseur'))
         <script type="text/javascript">
-            notification('success', 'Fournisseur Créée');
+            notification('success', 'Fournisseur Créé');
         </script>
     @endif
     @if(Session::has('success-fournisseur'))
         <script type="text/javascript">
-            notification('success', 'Fournisseur Créée');
+            notification('success', 'Fournisseur Créé');
         </script>
     @endif
     @if(Session::has('error-client'))
@@ -500,7 +500,7 @@
     @endif
     @if(Session::has('modification-client'))
         <script type="text/javascript">
-            notification('success', 'Client modifiée');
+            notification('success', 'Client modifié');
         </script>
     @endif
     @if(Session::has('success-versement'))

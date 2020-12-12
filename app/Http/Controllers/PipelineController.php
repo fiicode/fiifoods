@@ -33,7 +33,7 @@ class PipelineController extends Controller
             ])->get();
         $commandes = [];
         $factures = [];
-        foreach($foodsNames as $value) {
+        foreach ($foodsNames as $value) {
             $vente = Vente::select('qtt')
                 ->where([
                     ['deleted_at', null],
@@ -48,9 +48,9 @@ class PipelineController extends Controller
             $commandes[$value->id] = $achat;
         }
         $stocks = [];
-        foreach ($commandes as $commande=>$key) {
-            foreach ($factures as $facture=>$k) {
-                if($commande === $facture) {
+        foreach ($commandes as $commande => $key) {
+            foreach ($factures as $facture => $k) {
+                if ($commande === $facture) {
                     $stocks[$commande] = bcsub($key, $k);
                 }
             }
@@ -62,7 +62,7 @@ class PipelineController extends Controller
         ])->get();
         $unique = $ventes->unique('foods_name_id');
         $foodsName = [];
-        foreach ($unique as $foods){
+        foreach ($unique as $foods) {
             $foodsName[get_foodsName($foods->foods_name_id)][$ventes->where('foods_name_id', $foods->foods_name_id)->sum('qtt')] = $ventes->where('foods_name_id', $foods->foods_name_id)->sum('mtt');
         }
         $ventes = collect($foodsName);
@@ -79,8 +79,8 @@ class PipelineController extends Controller
         return redirect()->route('pipeline')
             ->with('vente', $this->get_vente($du, $au))
             ->with('interet', $this->get_interet($du, $au))
-            ->with('du',$date1[2] . '-' . $date1[1] . '-' . $date1[0])
-            ->with('au',$date1[2] . '-' . $date1[1] . '-' . $date1[0]);
+            ->with('du', $date1[2] . '-' . $date1[1] . '-' . $date1[0])
+            ->with('au', $date1[2] . '-' . $date1[1] . '-' . $date1[0]);
     }
 
     private function get_vente($du, $au)
@@ -101,7 +101,7 @@ class PipelineController extends Controller
                 ['inventaire', true]
             ])->get();
         $montant = 0;
-        foreach($foodsNames as $value) {
+        foreach ($foodsNames as $value) {
             $ventes = Vente::select('qtt', 'pu', 'created_at')
                 ->where([
                     ['deleted_at', null],
@@ -113,16 +113,14 @@ class PipelineController extends Controller
                 $priceOfPurchase = Achat::select('priceOfPurchase')
                     ->where([
                         ['deleted_at', null],
-                        ['created_at', '<=' , $vente->created_at]
+                        ['created_at', '<=', $vente->created_at]
                     ])->get()->last();
                 if ($vente->pu < $priceOfPurchase->priceOfPurchase) {
                     return 'ERREUR DE DONNEE';
-                }else {
+                } else {
                     $montant += $vente->qtt * ($vente->pu - $priceOfPurchase->priceOfPurchase);
                 }
             }
-
-
         }
         return number_format($montant);
     }

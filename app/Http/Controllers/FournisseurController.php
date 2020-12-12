@@ -21,9 +21,9 @@ class FournisseurController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Fournisseur $fournisseur)
     {
-        //
+        return view('components.fournisseur', compact('fournisseur'));
     }
 
     /**
@@ -88,7 +88,7 @@ class FournisseurController extends Controller
     {
         $fournisseur->deleted_at = Date('Y-m-d H:i:s');
         $fournisseur->update();
-        return redirect()->route('activiste')->with('supression-fournisseur', 'commade supprimé');
+        return redirect()->route('activiste')->with('supression-fournisseur', 'commade supprimée');
     }
 
     /**
@@ -103,7 +103,7 @@ class FournisseurController extends Controller
         $fournisseur->nom = $request['nom'];
         $fournisseur->phone = $request['phone'];
         $fournisseur->update();
-        return redirect()->route('activiste')->with('modification-fournisseur', 'commade supprimé');
+        return redirect()->route('activiste')->with('modification-fournisseur', 'commade supprimée');
     }
 
     /**

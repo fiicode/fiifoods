@@ -248,4 +248,5 @@ class AchatController extends Controller
         $achat->delete();
         return back();
     }
+
 }

@@ -18,15 +18,14 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-
 Auth::routes();
-Route::group(['middleware' => ['auth']], function (){
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/recherche', 'SearchController@store')->name('rechercheData');
+    Route::post('/recherche', 'SearchController@store')->name('rechercheData');
     Route::get('/activiste', 'ActivisteController@index')->name('activiste');
     Route::get('/pipeline', 'PipelineController@index')->name('pipeline');
-    Route::get('/sample', 'HomeController@sample')->name('sample');
     Route::post('/pipeline', 'PipelineController@recherche')->name('recherche');
+    Route::get('/sample', 'HomeController@sample')->name('sample');
     Route::resource('achats', 'AchatController');
     Route::resource('ventes', 'VenteController');
     Route::resource('users', 'UserController');
@@ -70,6 +69,64 @@ Route::group(['middleware' => ['auth']], function (){
         'uses' => 'GetItemPriceController@achats',
         'as' => 'achats',
         'middleware' => 'auth'
+    ]);
+
+    Route::get('FoodSearch/', [
+        'uses' => 'GetUniqueSearch@showfoods',
+        'as' => 'showfoods',
+        // 'middleware' => 'auth'
+    ]);
+
+    Route::get('AchatSearch/', [
+        'uses' => 'GetUniqueSearch@showachat',
+        'as' => 'showachat',
+       // 'middleware' => 'auth'
+    ]);
+
+    Route::get('ClientSearch', [
+        'uses' => 'GetUniqueSearch@showclient',
+        'as' => 'showclient',
+        // 'middleware' => 'auth'
+    ]);
+    
+    Route::get('FournisseurSearch', [
+        'uses' => 'GetUniqueSearch@showfournisseur',
+        'as' => 'showfournisseur',
+        // 'middleware' => 'auth'
+    ]);
+    Route::get('VenteSearch', [
+        'uses' => 'GetUniqueSearch@showvente',
+        'as' => 'showvente',
+        // 'middleware' => 'auth'
+    ]);
+    Route::get('DepenseSearch', [
+        'uses' => 'GetUniqueSearch@showdepense',
+        'as' => 'showdepense',
+        // 'middleware' => 'auth'
+    ]);
+    
+
+    Route::get('FactureSearch', [
+        'uses' => 'GetUniqueSearch@showfacture',
+        'as' => 'showfacture',
+        // 'middleware' => 'auth'
+    ]);
+
+    Route::get('MembreSearch', [
+        'uses' => 'GetUniqueSearch@showmembre',
+        'as' => 'showmembre',
+        // 'middleware' => 'auth'
+    ]);
+    Route::get('OptionSearch', [
+        'uses' => 'GetUniqueSearch@showoption',
+        'as' => 'showoption',
+        // 'middleware' => 'auth'
+    ]);
+
+    Route::get('OrderSearch', [
+        'uses' => 'GetUniqueSearch@showorder',
+        'as' => 'showorder',
+        // 'middleware' => 'auth'
     ]);
 });
 

@@ -37,6 +37,6 @@ class VersementClientController extends Controller
             $type = 'error-versement';
         }
 
-        return redirect()->route('activiste')->with($type, 'commade supprimé');
+        return redirect()->route('activiste')->with($type, 'commade supprimée');
     }
 }

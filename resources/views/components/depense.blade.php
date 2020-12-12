@@ -24,84 +24,88 @@
                     @if($depense)
                         <form action="{{route('depense.update', ['depense' => $depense])}}" method="post">
                             {{method_field('PATCH')}}
-                            @else
-                                <form action="{{route('depense.store')}}" method="post">
-                                    @endif
-                                    @csrf
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-5">
-                                                <div class="form-group {{$errors->has('description') ? 'has-error' : ''}}">
-                                                    <label for="">Description</label>
-                                                    @if($depense)
-                                                        <textarea class="form-control" placeholder="Description" name="description" id="description">{{old('description')? old('name') : $depense->description}}</textarea>
-                                                    @else
-                                                        <textarea class="form-control" placeholder="Description" name="description" id="description">{{old('description')}}</textarea>
-                                                    @endif
-                                                </div>
-                                                @if($errors->has('description'))
-                                                    <span class="text-danger">
-                                                        <p style="font-size: 11px">{{$errors->first('description')}}</p>
-                                                    </span>
-                                                @endif
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group {{$errors->has('montant') ? 'has-error' : ''}}">
-                                                    <label for="">Montant</label>
-                                                    @if($depense)
-                                                        <input type="text" class="form-control" placeholder="Montant" name="montant" value="{{old('montant')? old('montant') : $depense->priceOfPurchase}}" required>
-                                                    @else
-                                                        <input type="text" class="form-control" placeholder="Montant" name="montant" value="{{old('montant')}}" required>
-                                                    @endif
-                                                </div>
-                                                @if($errors->has('montant'))
-                                                    <span class="text-danger">
-                                                    <p style="font-size: 11px">{{$errors->first('montant')}}</p>
-                                                </span>
-                                                @endif
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="">Motif</label>
-                                                    <select class="form-control select2" name="motif" id="motif">
-                                                        @foreach(get_motif() as $motif)
-                                                            @if($depense)
-                                                                <option {{$motif->motif == $depense->motif ? 'selected' : ''}} value="{{$motif->id}}">{{$motif->name}}</option>
-                                                            @else
-                                                                <option value="{{$motif->id}}">{{$motif->name}}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <label for="">Entité</label>
-                                                    <select class="form-control select2" name="entite" id="motif">
-                                                        @foreach(get_entite() as $entite)
-                                                            @if($depense)
-                                                                <option {{$entite->entite == $depense->entite ? 'selected' : ''}} value="{{$entite->id}}">{{$entite->name}}</option>
-                                                            @else
-                                                                <option value="{{$entite->id}}">{{$entite->name}}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-1">
-                                                <br>
+                    @else
+                        <form action="{{route('depense.store')}}" method="post">
+                    
+                            @csrf
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group {{$errors->has('description') ? 'has-error' : ''}}">
+                                                <label for="">Description</label>
                                                 @if($depense)
-                                                    <button type="submit" class="btn btn-primary btn-xs" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></button>
-                                                    <a href="{{route('depense.index')}}" class="btn btn-danger btn-xs" rel="tooltip" title="Fermer"><i class="fa fa-close"></i></a>
+                                                    <textarea class="form-control" placeholder="Description" name="description" id="description">{{old('description')? old('name') : $depense->description}}</textarea>
                                                 @else
-                                                    <button type="submit" class="btn btn-primary" rel="tooltip" title="Enregister"><i class="fa fa-save"></i></button>
+                                                    <textarea class="form-control" placeholder="Description" name="description" id="description">{{old('description')}}</textarea>
                                                 @endif
+                                            </div>
+                                            @if($errors->has('description'))
+                                                <span class="text-danger">
+                                                    <p style="font-size: 11px">{{$errors->first('description')}}</p>
+                                                </span>
+                                            @endif
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group {{$errors->has('montant') ? 'has-error' : ''}}">
+                                                <label for="">Montant</label>
+                                                @if($depense)
+                                                    <input type="text" class="form-control" placeholder="Montant" name="montant" value="{{old('montant')? old('montant') : $depense->priceOfPurchase}}" required>
+                                                @else
+                                                    <input type="text" class="form-control" placeholder="Montant" name="montant" value="{{old('montant')}}" required>
+                                                @endif
+                                            </div>
+                                            @if($errors->has('montant'))
+                                                <span class="text-danger">
+                                                <p style="font-size: 11px">{{$errors->first('montant')}}</p>
+                                            </span>
+                                            @endif
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="">Motif</label>
+                                                <select class="form-control select2" name="motif" id="motif">
+                                                    @foreach(get_motif() as $motif)
+                                                        @if($depense)
+                                                            <option {{$motif->motif == $depense->motif ? 'selected' : ''}} value="{{$motif->id}}">{{$motif->name}}</option>
+                                                        @else
+                                                            <option value="{{$motif->id}}">{{$motif->name}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="">Entité</label>
+                                                <select class="form-control select2" name="entite" id="motif">
+                                                    @foreach(get_entite() as $entite)
+                                                        @if($depense)
+                                                            <option {{$entite->entite == $depense->entite ? 'selected' : ''}} value="{{$entite->id}}">{{$entite->name}}</option>
+                                                        @else
+                                                            <option value="{{$entite->id}}">{{$entite->name}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <br>
+                                            @if($depense)
+                                                <button type="submit" class="btn btn-primary btn-xs" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></button>
+                                                <a href="{{route('depense.index')}}" class="btn btn-danger btn-xs" rel="tooltip" title="Fermer"><i class="fa fa-close"></i></a>
+                                            @else
+                                                <button type="submit" class="btn btn-primary" rel="tooltip" title="Enregister"><i class="fa fa-save"></i></button>
+                                            @endif
+                                        </div>
                                     </div>
+                                </div>
 
-                                    <div class="clearfix"></div>
-                                </form>
+                                <div class="clearfix"></div>
+                            </form>
+                        
+                        </form>
+                    @endif
+                
                 </div>
             </div>
         </div>

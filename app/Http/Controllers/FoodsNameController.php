@@ -22,9 +22,10 @@ class FoodsNameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(FoodsName $foods_name)
     {
-        //
+        // $foodsNames = FoodsName::all();
+        // return view('components.showfoods', compact('foods_name'));
     }
 
     /**
@@ -68,7 +69,7 @@ class FoodsNameController extends Controller
                 'user_id' => \Auth::user()->id
             ]);
             $type = 'success-foodsName';
-            $message = "FoodsName créée.";
+            $message = "FoodsName créé.";
         }else {
             $type = 'error-foodsName';
             $message = "FoodsName existe déjà.";

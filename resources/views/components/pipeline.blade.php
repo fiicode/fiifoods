@@ -123,5 +123,6 @@
         $(function () {
             $('#dashboard').DataTable()
         })
+        
     </script>
 @stop

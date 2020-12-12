@@ -13,6 +13,8 @@ class Client extends Model
         'nom', 'phone', 'user_id'
     ];
 
+    // protected $guarded = [];
+
 
     public function user(): BelongsTo
     {
