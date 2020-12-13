@@ -244,65 +244,6 @@ class SearchController extends Controller
         ;
     }
 
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function show($id)
-    // {
-    //     //
-    // }
 
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function edit($id)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, $id)
-    // {
-    //     //
-    // }
-
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy($id)
-    // {
-    //     //
-    // }
-
-    public function showachat(Achat $achat)
-    {
-        ///$achat = Achat::all()->where('id', $request['id']);
-        // dd($achat);
-        // ->where('foods_name_id', $request['foodsId'])
-        // ->where('deleted_at', null)
-            // ->get()->last();
-        //dd($id);
-        //$achat = Achat::find($id);
-
-        // return redirect()->route('activiste')->with('fournisseurtVersemnt', $id);
-        // return redirect()->route('activiste')->with('fournisseur', $fournisseur);
-
-        // return view('components.rechercheachat', compact('achat'));
-        return view('components.showachat')->with('achat', $achat);
-    }
+    
 }
