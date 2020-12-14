@@ -97,7 +97,7 @@
                                 <th>Champ</th>
                                 <th>Description</th>
                                 <th>Montant</th>
-                                <th>Le </th>
+                                <th>Ajouter Le</th>
                             </tr>
                             {{-- <th>Montant</th>
                             <th>Produist</th>
