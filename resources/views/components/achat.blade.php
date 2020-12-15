@@ -263,9 +263,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group {{$errors->has('name') ? 'has-error' : ''}}">
                                         @if($unite)
-                                        <input type="text" class="form-control" placeholder="Ex. PCS" name="name" value="{{old('name') ? old('name') : $unite->name}}" required>
+                                            <input type="text" class="form-control" placeholder="Ex. PCS" name="name" value="{{old('name') ? old('name') : $unite->name}}" required>
                                         @else
-                                        <input type="text" class="form-control" placeholder="Ex. PCS" name="name" value="{{old('name')}}" required>
+                                            <input type="text" class="form-control" placeholder="Ex. PCS" name="name" value="{{old('name')}}" required>
                                         @endif
                                     </div>
                                     @if($errors->has('name'))
@@ -485,7 +485,7 @@
             var pv = $('form').find('[name="prixVente"]')[0];
             $.ajax({
                 method: 'GET',
-                url: '{{ route('price', ['ItemName' => 1]) }}',
+                url: '{{ route('price', ['foods' => 1]) }}',
                 data: {
                     _token: '{{ Session::token() }}',
                     foodsId: article.value
@@ -501,6 +501,7 @@
                 // }
             });
         });
+
         $(function () {
             $('#orderTable').DataTable()
         })

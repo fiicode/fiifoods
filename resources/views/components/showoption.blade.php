@@ -2,9 +2,7 @@
 @section('styles')
     <link rel="stylesheet" href="{{asset('assets/css/dataTables.bootstrap.min.css')}}">
 @stop
-@section('content')
-
-                                   
+@section('content')                     
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -13,7 +11,7 @@
                 </div>
                 <div class="content">
                     <p><strong>Nom : </strong> {{$option->name}} </p>
-                    <p><strong>Motif : </strong> {{$option->motif}} </p>
+                    <p><strong>Unité : </strong> {{$option->unite}} </p>
                     <p><strong>Date d'enregistrement : </strong> {{$option->created_at->format('d/m/Y H:i:s')}} </p>
                    
                 </div>

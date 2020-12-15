@@ -66,7 +66,7 @@ class GetUniqueSearch extends Controller
         return view('components.showmembre', compact('membre'));
     }
 
-    public function showoption(Option $request)
+    public function showoption(Request $request)
     {
         $option = Option::find($request->option);
         return view('components.showoption', compact('option'));

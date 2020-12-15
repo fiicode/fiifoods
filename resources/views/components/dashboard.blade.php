@@ -204,7 +204,7 @@
                                     <tr>
                                         <td>Options</td>
                                         <td><a href="{{route('showoption', ['option' => $option])}}">{{$option->name}}</a></td>                                        
-                                        <td><a href="{{route('showoption', ['option' => $option])}}">{{$option->motif}}</a></td>
+                                        <td><a href="{{route('showoption', ['option' => $option])}}">{{$option->unite}}</a></td>
                                         <td><a href="{{route('showoption', ['option' => $option])}}">{{$option->created_at}}</a></td>
                                     </tr>    
                                 @endforeach  

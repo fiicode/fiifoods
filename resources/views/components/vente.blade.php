@@ -306,7 +306,7 @@
                 var pu = $('form').find('[name="prixAchat"]')[0];
                 $.ajax({
                     method: 'GET',
-                    url: '{{ route('price', ['ItemName' => 1]) }}',
+                    url: '{{ route('price', ['foods' => 1]) }}',
                     data: {
                         _token: '{{ Session::token() }}',
                         foodsId: article.value
