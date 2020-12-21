@@ -77,7 +77,6 @@
         </div>
     </div>  
 
-
     @if(Session::has('achats') || Session::has('ventes') || Session::has('foods_names') ||
         Session::has('clients') || Session::has('depenses') || Session::has('factures') || 
         Session::has('foods_names') || Session::has('fournisseurs') ||Session::has('membres') || 
@@ -96,14 +95,10 @@
                             <tr>
                                 <th>Champ</th>
                                 <th>Description</th>
-                                <th>Montant</th>
+                                <th>Détails</th>
                                 <th>Ajouter Le</th>
                             </tr>
-                            {{-- <th>Montant</th>
-                            <th>Produist</th>
-                            <th>Quantité</th>
-                            <th>Montant</th>
-                            <th>Montant</th> --}}
+                           
                         </thead>
                         <tbody>
                                 @foreach(session('foods_names') as $foods_name)

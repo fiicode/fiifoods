@@ -188,7 +188,7 @@ function get_credit_today() {
  * @return string
  */
 function get_commande_today() {
-    $commandes = \App\Model\Achat::select('mntTotalAchat')
+    $commandes = Achat::select('mntTotalAchat')
         ->where([
             ['deleted_at', null],
             ['created_at', '>=', Date('Y-m-d') . ' 00:00:00']

@@ -23,6 +23,7 @@ class Fournisseur extends Model
     {
         return $this->hasMany(Achat::class);
     }
+    
     public function order(): HasMany
     {
         return $this->hasMany(Order::class);
