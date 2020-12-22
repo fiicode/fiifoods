@@ -68,9 +68,8 @@ class HomeController extends Controller
         }
         $ventes = collect($foodsName);
 
-        // $searchs1 = Search::select('search');
 
-        $searchs = Search::select('search')->orderBy('search', 'desc')->limit(5)->get();
+        $searchs = Search::select('search')->latest()->limit(5)->get();
 
         return view('home', compact('ventes', 'stocks', 'searchs'));
 
