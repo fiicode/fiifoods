@@ -108,6 +108,8 @@ class UserController extends Controller
 
         $this->validate($request, [
             'name'     => 'required|min:2',
+            'username' => 'required|min:3|unique:users',
+            'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed'
         ]);
         if (\Auth::user()->id == 1 || \Auth::user()->id == $user->id) {
