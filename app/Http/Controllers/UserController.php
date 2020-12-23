@@ -108,18 +108,20 @@ class UserController extends Controller
 
         $this->validate($request, [
             'name'     => 'required|min:2',
-            'username' => 'required|min:3|unique:users',
-            'email'    => 'required|email|max:255|unique:users',
+            'username' => 'required|min:3',
+            'email'    => 'required|email|max:255',
             'password' => 'required|min:6|confirmed'
         ]);
+
         if (\Auth::user()->id == 1 || \Auth::user()->id == $user->id) {
             $user->name = $request['name'];
+            $user->username = $request['username'];
             $user->email = $request['email'];
             $user->password = bcrypt($request['password']);
             $user->update();
-            return redirect()->route('users.index')->with('modification-user', 'utilisateur supprimé');
+            return redirect()->route('users.index')->with('modification-user', 'utilisateur modifié');
         }
-        return redirect()->route('users.index')->with('error-user', 'utilisateur supprimé');
+        return redirect()->route('users.index')->with('error-user', 'utilisateur modifié');
     }
 
     /**

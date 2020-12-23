@@ -42,6 +42,7 @@
                             <div class="col-md-12">
                                 @if($user)
                                 <form action="{{route('users.update', ['user' => $user])}}" method="post">
+                                    @csrf
                                     {{-- {{method_field('PATCH')}} --}}
                                     @method('PATCH')
                                 @else
