@@ -42,7 +42,8 @@
                             <div class="col-md-12">
                                 @if($user)
                                 <form action="{{route('users.update', ['user' => $user])}}" method="post">
-                                    {{method_field('PATCH')}}
+                                    {{-- {{method_field('PATCH')}} --}}
+                                    @method('PATCH')
                                 @else
                                 <form action="{{route('users.store')}}" method="post">
                                 @endif
@@ -52,9 +53,9 @@
                                             <div class="form-group {{$errors->has('name') ? 'has-error' : ''}}">
                                                 <label for=""><i class="fa fa-user text-danger"></i> Nom Utilisateur</label>
                                                 @if($user)
-                                                    <input type="text" class="form-control" placeholder="Ex. Joe" name="name" id="name" value="{{old('name')? old('name') : $user->name}}">
+                                                    <input type="text" class="form-control" placeholder="Ex: Joe" name="name" id="name" value="{{old('name')? old('name') : $user->name}}">
                                                 @else
-                                                    <input type="text" class="form-control" placeholder="Ex. Joe" name="name" id="name" value="{{old('name')}}">
+                                                    <input type="text" class="form-control" placeholder="Ex: Joe" name="name" id="name" value="{{old('name')}}">
                                                 @endif
                                             </div>
                                             @if($errors->has('name'))
@@ -67,9 +68,9 @@
                                             <div class="form-group {{$errors->has('username') ? 'has-error' : ''}}">
                                                 <label for=""><i class="fa fa-user text-danger"></i> Pseudo</label>
                                                 @if($user)
-                                                    <input type="text" class="form-control" placeholder="Ex. joe" name="username" disabled rel="tooltip" title="Vous ne pouvez pas modifier ces informations" id="username" value="{{old('username')? old('username') : $user->username}}">
+                                                    <input type="text" class="form-control" placeholder="Ex: joe" name="username"  rel="tooltip" id="username" value="{{old('username')? old('username') : $user->username}}">
                                                 @else
-                                                    <input type="text" class="form-control" placeholder="Ex. joe" name="username" id="username" value="{{old('username')}}">
+                                                    <input type="text" class="form-control" placeholder="Ex: joe" name="username" id="username" value="{{old('username')}}">
                                                 @endif
                                             </div>
                                             @if($errors->has('username'))
@@ -82,9 +83,9 @@
                                             <div class="form-group {{$errors->has('email') ? 'has-error' : ''}}">
                                                 <label for=""><i class="fa fa-at text-danger"></i> Email</label>
                                                 @if($user)
-                                                    <input type="text" class="form-control" placeholder="Ex. exemple@gmail.com" name="email" disabled rel="tooltip" title="Vous ne pouvez pas modifier ces informations" id="email" value="{{old('email')? old('email') : $user->email}}">
+                                                    <input type="text" class="form-control" placeholder="Ex: exemple@gmail.com" name="email"  rel="tooltip"  id="email" value="{{old('email')? old('email') : $user->email}}">
                                                 @else
-                                                    <input type="text" class="form-control" placeholder="Ex. exemple@gmail.com" name="email" id="email" value="{{old('email')}}">
+                                                    <input type="text" class="form-control" placeholder="Ex: exemple@gmail.com" name="email" id="email" value="{{old('email')}}">
                                                 @endif
                                             </div>
                                             @if($errors->has('email'))
@@ -159,11 +160,15 @@
                                 <td>{{$user->created_at->format('d M Y')}}</td>
                                 <td>
                                     @if(\Auth::user()->id == 1 || Auth::user()->id == $user->id)
-                                    <a href="{{route('users.show', ['user' => $user])}}" class="btn btn-xs btn-primary btn-simple" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></a>
+                                        <a href="{{route('users.show', ['user' => $user])}}" class="btn btn-xs btn-primary btn-simple" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></a>
                                     @endif
                                     @if(\Auth::user()->id == 1)
-                                    {{--<a href="{{route('users.edit', ['user' => $user])}}" data-toggle="tooltip" data-placement="left" rel="tooltip" title="Supprimer" class="btn btn-danger btn-xs delete btn-simple" data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fa fa-trash"></i></a>--}}
-                                    <a href="#" data-toggle="tooltip" data-placement="left" rel="tooltip" title="Supprimer" class="btn btn-danger btn-xs delete btn-simple" data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fa fa-trash"></i></a>
+                                        <form action="{{ route('users.destroy', $user) }}" method="post" style="display: inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button data-toggle="tooltip" data-placement="left" rel="tooltip" title="Supprimer" class="btn btn-danger btn-xs delete btn-simple" data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fa fa-trash"></i></button>
+                                        </form>
+                                        {{-- <a href="{{route('users.destroy', ['user' => $user])}}" data-toggle="tooltip" data-placement="left" rel="tooltip" title="Supprimer" class="btn btn-danger btn-xs delete btn-simple" data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fa fa-trash"></i></a> --}}
                                     @endif
                                 </td>
                             </tr>
