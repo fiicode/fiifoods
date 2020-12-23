@@ -50,7 +50,7 @@
         </div>
         <div class="col-md-4">
             <div class="row">
-                @if((!$searchs->isEmpty() > 0))
+                @if(($searchs->count() != 0))
                     <div class="card ">
                         <div class="header">  
                             <h4 class="title"><i class="fa fa-search"></i> <span class="label label-primary">Les dernières recherches </span></h4>
@@ -66,12 +66,18 @@
                         </div>      
                     </div>      
                 @else
-                    <div class="alert alert-info alert-dismissible fade show" role="alert">
-                        <strong>{{ "Désolé aucune recherche n'a été efectué pour le moment" }}!</strong>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    <div class="card ">
+                        <div class="header">  
+                            <h4 class="title"><i class="fa fa-search"></i> <span class="label label-primary">Les dernières recherches </span></h4>
+                            <p class="category"> {{Date('d M Y')}}</p>  
+                        </div>
+                        <div class="content">
+                            <div class="alert alert-info" role="alert"> 
+                                <strong >{{ "Désolé aucune recherche n'a été efectué pour le moment" }} !</strong>
+                            </div>
+                           
+                        </div>
+                    </div>      
                 @endif
             </div> 
         </div>
