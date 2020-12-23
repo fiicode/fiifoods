@@ -18,6 +18,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', User::class);
+
         $users = User::where([
             ['deleted_at', null],
             ['id', '>', 1]
@@ -43,12 +45,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request);
+        $this->authorize('create', User::class);
+        
+        //dd($request);
         $this->validate($request, [
             'name'     => 'required|min:2',
             'username' => 'required|min:3|unique:users',
             'email'    => 'required|email|max:255|unique:users',
-            'password' => 'required|min:3|confirmed'
+            'password' => 'required|min:6|confirmed'
         ]);
         $type = 'error-user';
         $message = 'created!';
@@ -62,7 +66,6 @@ class UserController extends Controller
             $message = 'success';
         }
 
-        //
         return redirect()
             ->route('users.index')
             ->with($type, $message);
@@ -76,6 +79,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $this->authorize('view', $user);
+        
         return redirect()->route('users.index')->with('user', $user);
     }
 
@@ -99,17 +104,20 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $this->authorize('update', $user);
+
         $this->validate($request, [
             'name'     => 'required|min:2',
-            'password' => 'required|min:3|confirmed'
+            'password' => 'required|min:6|confirmed'
         ]);
         if (\Auth::user()->id == 1 || \Auth::user()->id == $user->id) {
             $user->name = $request['name'];
+            $user->email = $request['email'];
             $user->password = bcrypt($request['password']);
             $user->update();
-            return redirect()->route('users.index')->with('modification-user', 'commade supprimé');
+            return redirect()->route('users.index')->with('modification-user', 'utilisateur supprimé');
         }
-        return redirect()->route('users.index')->with('error-user', 'commade supprimé');
+        return redirect()->route('users.index')->with('error-user', 'utilisateur supprimé');
     }
 
     /**
@@ -118,8 +126,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return redirect()->route('users.index')->with('supression-user', 'utilisateur supprimé');
     }
 }
