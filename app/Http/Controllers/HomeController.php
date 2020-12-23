@@ -78,6 +78,7 @@ class HomeController extends Controller
     public function sample() {
         $commande = Achat::select('mntTotalAchat')->sum('mntTotalAchat');
         $vente = Vente::select('mtt')->sum('mtt');
+        
         return view('components.sample', compact('commande', 'vente'));
     }
 }

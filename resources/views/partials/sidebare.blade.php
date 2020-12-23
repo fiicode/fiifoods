@@ -1,5 +1,5 @@
 <div class="sidebar" data-color="red" data-image="assets/img/sidebar-5.jpg">
-    <div class="sidebar-wrapper" style="border-bottom-right-radius: 100%;box-shadow: 0px 0px 19px 0px #080808;">
+    <div class="sidebar-wrapper" style="border-bottom-right-radius: 55%;box-shadow: 0px 0px 19px 0px #080808;">
         <div class="logo" style="border-bottom-right-radius: 50px;box-shadow: 0px 0px 19px 0px #080808;">
             <a href="{{route('home')}}" class="simple-text" style="font-family: 'Cooper Black'; font-size: 28px">
                 <i class="pe-7s-coffee"></i>
@@ -58,7 +58,12 @@
             </li>
             <li class="{{active('sample')}}">
                 <a href="{{route('sample')}}">
-                    <p>sample</p>
+                    <p>Sample</p>
+                </a>
+            </li>
+            <li class="{{active('sample')}}">
+                <a href="{{route('sample')}}">
+                    <p>Statistiques</p>
                 </a>
             </li>
         </ul>

@@ -40,7 +40,6 @@
                 </li>
             </ul>
 
-
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -60,7 +59,7 @@
                         <li>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                document.getElementById('logout-form').submit();">
                                 <i class="pe-7s-power"></i> {{ __('Se deconnecter') }}
                             </a>
 

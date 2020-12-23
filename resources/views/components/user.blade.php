@@ -215,7 +215,7 @@
 
     @if(Session::has('success-user'))
         <script type="text/javascript">
-            notification('success', 'Utilisateur Créée');
+            notification('success', 'Utilisateur Créé');
         </script>
     @endif
     @if(Session::has('error-user'))
@@ -225,12 +225,12 @@
     @endif
     @if(Session::has('supression-user'))
         <script type="text/javascript">
-            notification('danger', 'Utilisateur suprimée');
+            notification('danger', 'Utilisateur suprimé');
         </script>
     @endif
     @if(Session::has('modification-user'))
         <script type="text/javascript">
-            notification('success', 'Utilisateur modifiée');
+            notification('success', 'Utilisateur modifié');
         </script>
     @endif
 @stop
