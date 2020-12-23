@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -113,7 +114,7 @@ class UserController extends Controller
             'password' => 'required|min:6|confirmed'
         ]);
 
-        if (\Auth::user()->id == 1 || \Auth::user()->id == $user->id) {
+        if (Auth::user()->id == 1 || Auth::user()->id == $user->id) {
             $user->name = $request['name'];
             $user->username = $request['username'];
             $user->email = $request['email'];
