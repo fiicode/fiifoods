@@ -38,12 +38,14 @@
                     <p>Mes Clients / Four</p>
                 </a>
             </li>
-            <li class="{{active('users.index')}}">
-                <a href="{{route('users.index')}}" rel="tooltip">
-                    <i class="pe-7s-add-user"></i>
-                    <p>Utilisateurs</p>
-                </a>
-            </li>
+            @can('create', App\User::class)
+                <li class="{{active('users.index')}}">
+                    <a href="{{route('users.index')}}" rel="tooltip">
+                        <i class="pe-7s-add-user"></i>
+                        <p>Utilisateurs</p>
+                    </a>
+                </li>
+            @endcan
             <li class="{{active('depense.index')}}">
                 <a href="{{route('depense.index')}}" rel="tooltip" title="En cours de développement">
                     <i class="pe-7s-graph"></i>
