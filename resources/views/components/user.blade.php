@@ -27,6 +27,8 @@
 @stop
 @section('content')
     <?php $user = session('user') ?>
+    <?php $unite = session('unite') ?>
+
     <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -136,6 +138,59 @@
                 </div>
             </div>
     </div>
+    <div class="row">
+       <div class="col-md-4">
+            <div class="card">
+                <div class="header">
+                    @if($unite)
+                    <h5 class="title text-primary">Modification de {{$unite->name}}</h5>
+                    @else
+                        <h5 class="title"><span class="label label-primary">Ajouter un rôle</span></h5>
+                    @endif
+                </div>
+                <div class="content">
+                    @if($unite)
+                        <form action="{{route('option.update', ['option' => $unite])}}" method="post">
+                            @method('PATCH')
+                    @else
+                    <form action="{{route('option.store')}}" method="post">
+                    @endif
+                        @csrf
+                        <input type="hidden" name="role" value="role">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group {{$errors->has('product_name') ? 'has-error' : ''}}">
+                                        @if($unite)
+                                            <input type="text" class="form-control" placeholder="Ex: Admin" name="product_name" value="{{old('product_name') ?? $unite->name}}" required>
+                                        @else
+                                            <input type="text" class="form-control" placeholder="Ex: User" name="product_name" value="{{old('product_name')}}" required>
+                                        @endif
+                                    </div>
+                                    @if($errors->has('product_name'))
+                                        <span class="text-danger">
+                                        <p style="font-size: 11px">{{$errors->first('product_name')}}</p>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class="col-md-6">
+                                    @if($unite)
+                                    <button type="submit" class="btn btn-primary btn-fill" rel="tooltip" title="Modifer"><i class="fa fa-edit"></i></button>
+                                    <a href="{{route('achats.index')}}" class="btn btn-danger btn-fill" rel="tooltip" title="Fermer"><i class="fa fa-close"></i></a>
+                                    @else
+                                    <button type="submit" class="btn btn-info btn-fill" rel="tooltip" title="Enregister"><i class="fa fa-save"></i>Enregistrer</button>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
     <div class="row">
         <div class="col-md-12">
@@ -218,6 +273,18 @@
 
         }
     </script>
+
+    @if(Session::has('success-option'))
+        <script type="text/javascript">
+            notification('success', 'Option créée ');
+        </script>
+    @endif
+    
+    @if(Session::has('error-option'))
+    <script type="text/javascript">
+        notification('warning', 'Option éxiste déjà.');
+    </script>
+    @endif
 
     @if(Session::has('success-user'))
         <script type="text/javascript">

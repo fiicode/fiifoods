@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-// use App\Http\Controllers\Auth;
 use App\Model\Achat;
 use App\Model\FoodsName;
 use App\Model\Fournisseur;
@@ -90,7 +89,7 @@ class AchatController extends Controller
                 Fournisseur::firstOrcreate([
                     'nom' => $request['nom'],
                     'phone' => isset($request['phone']) ? $request['phone'] : null,
-                    'user_id' => \Auth::user()->id
+                    'user_id' => Auth::user()->id
                 ]);
                 $fournisseur = Fournisseur::where([
                     ['nom', $request['nom']],
@@ -107,7 +106,7 @@ class AchatController extends Controller
             if (!$orderId) {
                 Order::create([
                     'orderNum' => $request['orderId'],
-                    'user_id' => \Auth::user()->id
+                    'user_id' => Auth::user()->id
                 ]);
                 $orderId = Order::where([
                     ['orderNum', $request['orderId']],
@@ -134,7 +133,7 @@ class AchatController extends Controller
                 'paye' => $request['paye'] >=0 && $request['paye'] <= $request['qtt'] * $request['prixAchat'] ? $request['paye'] : $request['qtt'] * $request['prixAchat'],
                 'fournisseur_id' => $fournisseur ? $fournisseur->id : null,
                 'order_id' => $orderId ? $orderId->id : null,
-                'user_id' => \Auth::user()->id
+                'user_id' => Auth::user()->id
             ]);
             $type = 'success-commande';
             $message = "commande existe déjà.";
@@ -163,7 +162,7 @@ class AchatController extends Controller
     {
         $achat->deleted_at = Date('Y-m-d H:i:s');
         $achat->update();
-        return redirect()->route('achats.index')->with('supression-commande', 'commade supprimé');
+        return redirect()->route('achats.index')->with('supression-commande', 'commade supprimée');
     }
 
     /**
@@ -187,7 +186,7 @@ class AchatController extends Controller
                 Fournisseur::firstOrcreate([
                     'nom' => $request['nom'],
                     'phone' => isset($request['phone']) ? $request['phone'] : null,
-                    'user_id' => \Auth::user()->id
+                    'user_id' => Auth::user()->id
                 ]);
                 $fournisseur = Fournisseur::where([
                     ['nom', $request['nom']],
@@ -204,7 +203,7 @@ class AchatController extends Controller
             if (!$orderId) {
                 Order::create([
                     'orderNum' => $request['orderId'],
-                    'user_id' => \Auth::user()->id
+                    'user_id' => Auth::user()->id
                 ]);
                 $orderId = Order::where([
                     ['orderNum', $request['orderId']],
