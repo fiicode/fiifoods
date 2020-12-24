@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Model\Option;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class OptionController extends Controller
 {
@@ -45,22 +47,44 @@ class OptionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-           'name' => 'required|min:1'
+            'product_name' => 'required|min:1',
+          
         ]);
-        $option = Option::where('name',$request['name'])->where('deleted_at', null)->get()->first();
-        if (!$option) {
-            Option::firstOrcreate([
-                'name' => $request['name'],
-                'unite' => true,
-                'user_id' => \Auth::user()->id
-            ]);
-            $type = 'success-option';
-            $message = "Option créée.";
-        }else {
-            $type = 'error-option';
-            $message = "Option existe déjà.";
+
+        if($request['product_name'] && request('unite')) {
+            $option = Option::where('name', $request['product_name'])->where('deleted_at', null)->get()->first();
+            if (!$option) {
+                Option::firstOrcreate([
+                    'name' => $request['product_name'],
+                    'unite' => true,
+                    'user_id' => Auth::user()->id
+                ]);
+                $type = 'success-option';
+                $message = "Option créée.";
+            } else {
+                $type = 'error-option';
+                $message = "Option éxiste déjà.";
+            }
+            return redirect()->route('achats.index')->with($type, $message);
         }
-        return redirect()->route('achats.index')->with($type, $message);
+
+        if ($request['product_name'] && request('role')) {
+            $option = Option::where('name', $request['product_name'])->where('deleted_at', null)->get()->first();
+            if (!$option) {
+                Option::firstOrcreate([
+                    'name' => $request['product_name'],
+                    'role' => true,
+                    'user_id' => Auth::user()->id
+                ]);
+                $type = 'success-option';
+                $message = "Option créée.";
+            } else {
+                $type = 'error-option';
+                $message = "Option éxiste déjà.";
+            }
+            return redirect()->route('users.index')->with($type, $message);
+        }
+       
     }
 
     /**
@@ -97,8 +121,8 @@ class OptionController extends Controller
     public function update(Request $request, Option $option)
     {
         $type = 'modification-option';
-        $message = "commande modifiée.";
-        $option->name = $request['name'];
+        $message = "Option modifiée.";
+        $option->name = $request['option'];
         $option->update();
         return redirect()->route('achats.index')->with($type, $message);
     }
