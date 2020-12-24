@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Option;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -25,6 +26,12 @@ class UserController extends Controller
             ['deleted_at', null],
             ['id', '>', 1]
         ])->get();
+
+        $options = Option::where([
+            ['deleted_at', null],
+            ['unite', true]
+        ])->get();
+        
         return view('components.user', compact('users'));
     }
 
