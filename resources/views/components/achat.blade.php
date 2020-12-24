@@ -194,7 +194,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="header">
-                    <h4 class="title"><i class="pe-7s-box1"></i><span class="label label-primary"> Tous les achats</span>  <a href="{{route('achats')}}" class="btn btn-info btn-fill pull-right btn-xs"><i class="fa fa-flask"></i> Toutes les achats</a></h4>
+                    <h4 class="title"><i class="pe-7s-box1"></i><span class="label label-primary"> Tous les achats</span>  <a href="{{route('achats')}}" class="btn btn-info btn-fill pull-right btn-xs"><i class="fa fa-flask"></i> Tous les achats</a></h4>
                 </div>
                 <div class="content">
                     <table class="table table-hover table-striped" id="orderTable">
@@ -252,25 +252,26 @@
                 </div>
                 <div class="content">
                     @if($unite)
-                    <form action="{{route('option.update', ['option' => $unite])}}" method="post">
+                        <form action="{{route('option.update', ['option' => $unite])}}" method="post">
                         {{method_field('PATCH')}}
                     @else
                     <form action="{{route('option.store')}}" method="post">
                     @endif
                         @csrf
+                        <input type="hidden" name="unite" value="unite">
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-group {{$errors->has('name') ? 'has-error' : ''}}">
+                                    <div class="form-group {{$errors->has('product_name') ? 'has-error' : ''}}">
                                         @if($unite)
-                                            <input type="text" class="form-control" placeholder="Ex. PCS" name="name" value="{{old('name') ? old('name') : $unite->name}}" required>
+                                            <input type="text" class="form-control" placeholder="Ex: PCS" name="product_name" value="{{old('product_name') ?? $unite->name}}" required>
                                         @else
-                                            <input type="text" class="form-control" placeholder="Ex. PCS" name="name" value="{{old('name')}}" required>
+                                            <input type="text" class="form-control" placeholder="Ex: PCS" name="product_name" value="{{old('product_name')}}" required>
                                         @endif
                                     </div>
-                                    @if($errors->has('name'))
+                                    @if($errors->has('product_name'))
                                         <span class="text-danger">
-                                        <p style="font-size: 11px">{{$errors->first('name')}}</p>
+                                        <p style="font-size: 11px">{{$errors->first('product_name')}}</p>
                                     </span>
                                     @endif
                                 </div>
@@ -341,9 +342,9 @@
                                         <select class="form-control" name="unite">
                                             @foreach($options as $option)
                                                 @if($ptds)
-                                                <option {{$ptds->id == $option->id ? 'selected' : ''}} value="{{$option->id}}">{{$option->name}}</option>
+                                                    <option {{$ptds->id == $option->id ? 'selected' : ''}} value="{{$option->id}}">{{$option->name}}</option>
                                                 @else
-                                                <option value="{{$option->id}}">{{$option->name}}</option>
+                                                    <option value="{{$option->id}}">{{$option->name}}</option>
                                                 @endif
                                             @endforeach
                                         </select>
@@ -536,20 +537,20 @@
         }
     </script>
 
+
     @if(Session::has('success-option'))
         <script type="text/javascript">
-            notification('success', 'Option');
-            
+            notification('success', 'Option créée ');
         </script>
     @endif
     @if(Session::has('error-option'))
     <script type="text/javascript">
-        notification('warning', 'Option');
+        notification('warning', 'Option éxiste déjà.');
     </script>
     @endif
     @if(Session::has('success-foodsName'))
         <script type="text/javascript">
-            notification('success', 'Produit Crée');
+            notification('success', 'Produit Créé');
         </script>
     @endif
     @if(Session::has('error-foodsName'))
