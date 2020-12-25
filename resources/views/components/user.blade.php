@@ -27,7 +27,7 @@
 @stop
 @section('content')
     <?php $user = session('user') ?>
-    <?php $unite = session('unite') ?>
+    <?php $role = session('role') ?>
 
     <div class="row">
             <div class="col-md-12">
@@ -139,18 +139,18 @@
             </div>
     </div>
     <div class="row">
-       <div class="col-md-4">
+       <div class="col-md-5">
             <div class="card">
                 <div class="header">
-                    @if($unite)
-                    <h5 class="title text-primary">Modification de {{$unite->name}}</h5>
+                    @if($role)
+                    <h5 class="title text-primary">Modification de {{$role->name}}</h5>
                     @else
-                        <h5 class="title"><span class="label label-primary">Ajouter un rôle</span></h5>
+                        <h5 class="title"><span class="label label-primary">Ajouter un Rôle</span></h5>
                     @endif
                 </div>
                 <div class="content">
-                    @if($unite)
-                        <form action="{{route('option.update', ['option' => $unite])}}" method="post">
+                    @if($role)
+                        <form action="{{route('option.update', ['option' => $role])}}" method="post">
                             @method('PATCH')
                     @else
                     <form action="{{route('option.store')}}" method="post">
@@ -161,8 +161,8 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group {{$errors->has('product_name') ? 'has-error' : ''}}">
-                                        @if($unite)
-                                            <input type="text" class="form-control" placeholder="Ex: Admin" name="product_name" value="{{old('product_name') ?? $unite->name}}" required>
+                                        @if($role)
+                                            <input type="text" class="form-control" placeholder="Ex: Admin" name="product_name" value="{{old('product_name') ?? $role->name}}" required>
                                         @else
                                             <input type="text" class="form-control" placeholder="Ex: User" name="product_name" value="{{old('product_name')}}" required>
                                         @endif
@@ -174,7 +174,7 @@
                                     @endif
                                 </div>
                                 <div class="col-md-6">
-                                    @if($unite)
+                                    @if($role)
                                     <button type="submit" class="btn btn-primary btn-fill" rel="tooltip" title="Modifer"><i class="fa fa-edit"></i></button>
                                     <a href="{{route('achats.index')}}" class="btn btn-danger btn-fill" rel="tooltip" title="Fermer"><i class="fa fa-close"></i></a>
                                     @else
@@ -189,9 +189,39 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-7">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title"><span class="label label-primary">Tous les Rôles</span></h4>
+                </div>
+                <div class="content">
+                    <table class="table table-hover table-striped" id="roleTable">
+                        <thead>
+                        <th>Rôle</th>
+                        <th>Le</th>
+                        <th>User</th>
+                        <th>Action</th>
+                        </thead>
+                        <tbody>
+                            @foreach($options as $role)
+                                <tr>
+                                    <td>{{$role->name}}</td>
+                                    <td>{{$role->created_at->format('d/m/y')}}</td>
+                                    <td>{{$role->user->username}}</td>
+                                    <td>
+                                        <a href="{{route('option.show', ['option' => $role])}}" class="btn btn-xs btn-primary btn-simple" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></a>
+                                        <a href="{{route('option.edit', ['option' => $role])}}" data-toggle="tooltip" data-placement="left" rel="tooltip" title="Supprimer" class="btn btn-danger btn-xs delete btn-simple" data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
     </div>
     
-
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -248,6 +278,9 @@
     <script>
         $(function () {
             $('#usersTable').DataTable()
+        })
+         $(function () {
+            $('#roleTable').DataTable()
         })
         function notification(type, message) {
             $(document).ready(function(){
