@@ -122,7 +122,7 @@ class OptionController extends Controller
     {
         $type = 'modification-option';
         $message = "Option modifiée.";
-        $option->name = $request['option'];
+        $option->name = $request['product_name'];
         $option->update();
         return redirect()->route('achats.index')->with($type, $message);
     }
