@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Depense;
 use App\Model\Option;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DepenseController extends Controller
 {
@@ -62,7 +63,7 @@ class DepenseController extends Controller
             'montant' => $request['montant'],
             'entite' => $request['entite'],
             'motif' => $request['motif'],
-            'user_id' => \Auth::user()->id
+            'user_id' => Auth::user()->id
         ]);
         return redirect()->route('depense.index')->with('success-depense', 'creer');
     }

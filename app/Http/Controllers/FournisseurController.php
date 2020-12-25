@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Fournisseur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FournisseurController extends Controller
 {
@@ -59,7 +60,7 @@ class FournisseurController extends Controller
             Fournisseur::firstOrcreate([
                 'nom' => $request['nom'],
                 'phone' => isset($request['phone']) ? $request['phone'] : null,
-                'user_id' => \Auth::user()->id
+                'user_id' => Auth::user()->id
             ]);
             $type = 'success-fournisseur';
             $message = "commande existe déjà.";

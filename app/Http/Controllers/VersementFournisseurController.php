@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Fournisseur;
 use App\Model\Option;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VersementFournisseurController extends Controller
 {
@@ -30,7 +31,7 @@ class VersementFournisseurController extends Controller
                 'name' => $request['mtt'],
                 'versemFournisseur' => true,
                 'fournisseur_id' => $fournisseur->id,
-                'user_id' => \Auth::user()->id
+                'user_id' => Auth::user()->id
             ]);
             $type = 'success-versement';
         }else {

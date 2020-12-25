@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Client;
 use App\Model\Option;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VersementClientController extends Controller
 {
@@ -30,7 +31,7 @@ class VersementClientController extends Controller
                 'name' => $request['mtt'],
                 'versemClient' => true,
                 'client_id' => $client->id,
-                'user_id' => \Auth::user()->id
+                'user_id' => Auth::user()->id
             ]);
             $type = 'success-versement';
         }else {

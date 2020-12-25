@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Client;
 use App\Model\Option;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CreditClientController extends Controller
 {
@@ -25,7 +26,7 @@ class CreditClientController extends Controller
                 'name' => $request['mtt'],
                 'creditClient' => true,
                 'client_id' => $client->id,
-                'user_id' => \Auth::user()->id
+                'user_id' => Auth::user()->id
             ]);
             $type = 'success-credit';
         }else {
@@ -42,7 +43,7 @@ class CreditClientController extends Controller
         Option::firstOrcreate([
             'name' => $request['name'],
             'motif' => true,
-            'user_id' => \Auth::user()->id
+            'user_id' => Auth::user()->id
         ]);
 
         return redirect()->route('depense.index')->with('success-motif', 'create');
@@ -55,7 +56,7 @@ class CreditClientController extends Controller
         Option::firstOrcreate([
             'name' => $request['name'],
             'entite' => true,
-            'user_id' => \Auth::user()->id
+            'user_id' => Auth::user()->id
         ]);
 
         return redirect()->route('depense.index')->with('success-entite', 'create');

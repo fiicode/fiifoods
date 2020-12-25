@@ -8,6 +8,7 @@ use App\Model\Facture;
 use App\Model\FoodsName;
 use App\Model\Vente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VenteController extends Controller
 {
@@ -79,7 +80,7 @@ class VenteController extends Controller
                 Client::firstOrcreate([
                     'nom' => $request['nom'],
                     'phone' => isset($request['phone']) ? $request['phone'] : null,
-                    'user_id' => \Auth::user()->id
+                    'user_id' => Auth::user()->id
                 ]);
                 $client = Client::where([
                     ['nom', $request['nom']],
@@ -95,7 +96,7 @@ class VenteController extends Controller
             if (!$factureNum) {
                 Facture::create([
                     'factureNum' => $request['factureNum'],
-                    'user_id' => \Auth::user()->id
+                    'user_id' => Auth::user()->id
                 ]);
                 $factureNum = Facture::where([
                     ['factureNum', $request['factureNum']],
@@ -120,7 +121,7 @@ class VenteController extends Controller
                 'paye' => $request['paye'] >=0 && $request['paye'] <= $request['qtt'] * $request['prixAchat'] ? $request['paye'] : $request['qtt'] * $request['prixAchat'],
                 'client_id' => $client ? $client->id : null,
                 'facture_id' => $factureNum ? $factureNum->id : null,
-                'user_id' => \Auth::user()->id
+                'user_id' => Auth::user()->id
             ]);
             $type = 'success-facture';
             $message = "commande existe déjà.";
@@ -173,7 +174,7 @@ class VenteController extends Controller
                 Client::firstOrcreate([
                     'nom' => $request['nom'],
                     'phone' => isset($request['phone']) ? $request['phone'] : null,
-                    'user_id' => \Auth::user()->id
+                    'user_id' => Auth::user()->id
                 ]);
                 $client = Client::where([
                     ['nom', $request['nom']],
@@ -189,7 +190,7 @@ class VenteController extends Controller
             if (!$factureNum) {
                 Facture::create([
                     'factureNum' => $request['factureNum'],
-                    'user_id' => \Auth::user()->id
+                    'user_id' => Auth::user()->id
                 ]);
                 $factureNum = Facture::where([
                     ['factureNum', $request['factureNum']],

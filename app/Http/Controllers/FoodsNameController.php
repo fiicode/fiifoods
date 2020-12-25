@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\FoodsName;
 use App\Model\Option;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FoodsNameController extends Controller
 {
@@ -66,7 +67,7 @@ class FoodsNameController extends Controller
                 'foodsName' => $request['foodsName'],
                 'unite_id' => $unite_id ? $unite_id->id : null,
                 'inventaire' => isset($request['inventaire']) ? true: false,
-                'user_id' => \Auth::user()->id
+                'user_id' => Auth::user()->id
             ]);
             $type = 'success-foodsName';
             $message = "FoodsName créé.";
