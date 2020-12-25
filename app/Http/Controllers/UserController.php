@@ -26,13 +26,13 @@ class UserController extends Controller
             ['deleted_at', null],
             ['id', '>', 1]
         ])->get();
-
+        
         $options = Option::where([
             ['deleted_at', null],
-            ['unite', true]
-        ])->get();
+            ['role', true]
+        ]);
         
-        return view('components.user', compact('users'));
+        return view('components.user', compact('users', 'options'));
     }
 
     /**
