@@ -540,12 +540,12 @@
 
     @if(Session::has('success-option'))
         <script type="text/javascript">
-            notification('success', 'Option créée ');
+            notification('success', 'Unité créée ');
         </script>
     @endif
     @if(Session::has('error-option'))
     <script type="text/javascript">
-        notification('warning', 'Option éxiste déjà.');
+        notification('warning', 'Unité éxiste déjà.');
     </script>
     @endif
     @if(Session::has('success-foodsName'))
@@ -555,7 +555,7 @@
     @endif
     @if(Session::has('error-foodsName'))
         <script type="text/javascript">
-            notification('warning', 'Produit existe déjà mais les options sont modifié');
+            notification('warning', 'Produit existe déjà mais les options sont modifiée');
         </script>
     @endif
     @if(Session::has('success-commande'))
@@ -580,12 +580,12 @@
     @endif
     @if(Session::has('modification-option'))
         <script type="text/javascript">
-            notification('success', 'Option modifiée');
+            notification('success', 'Unité modifiée');
         </script>
     @endif
     @if(Session::has('supression-option'))
         <script type="text/javascript">
-            notification('danger', 'Option suprimée');
+            notification('danger', 'Unité suprimée');
         </script>
     @endif
     @if(Session::has('supression-produit'))

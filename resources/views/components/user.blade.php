@@ -309,16 +309,25 @@
 
     @if(Session::has('success-option'))
         <script type="text/javascript">
-            notification('success', 'Option créée ');
+            notification('success', 'Rôle créé ');
         </script>
     @endif
     
     @if(Session::has('error-option'))
     <script type="text/javascript">
-        notification('warning', 'Option éxiste déjà.');
+        notification('warning', 'Rôle éxiste déjà.');
     </script>
     @endif
-
+    @if(Session::has('modification-option'))
+        <script type="text/javascript">
+            notification('success', 'Rôle modifiée');
+        </script>
+    @endif
+    @if(Session::has('supression-option'))
+        <script type="text/javascript">
+            notification('danger', 'Rôle suprimée');
+        </script>
+    @endif
     @if(Session::has('success-user'))
         <script type="text/javascript">
             notification('success', 'Utilisateur Créé');
