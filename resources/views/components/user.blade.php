@@ -119,7 +119,21 @@
                                                 </span>
                                             @endif
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-1">
+                                            <label>Rôle</label>
+                                            <div class="form-group">
+                                                <select class="form-control" name="role">
+                                                    @foreach($options as $option)
+                                                        @if($role)
+                                                            <option {{$role->id == $option->id ? 'selected' : ''}} value="{{$option->id}}">{{$option->name}}</option>
+                                                        @else
+                                                            <option value="{{$option->id}}">{{$option->name}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
                                             <br>
                                             @if($user)
                                                 <button type="submit" class="btn btn-primary btn-fill" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></button>
