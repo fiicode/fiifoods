@@ -120,7 +120,7 @@
                                             @endif
                                         </div>
                                         <div class="col-md-1">
-                                            <label>Rôle</label>
+                                            <label> Rôle</label>
                                             <div class="form-group">
                                                 <select class="form-control" name="role">
                                                     @foreach($options as $option)
@@ -334,12 +334,12 @@
     @endif
     @if(Session::has('modification-option'))
         <script type="text/javascript">
-            notification('success', 'Rôle modifiée');
+            notification('success', 'Rôle modifié');
         </script>
     @endif
     @if(Session::has('supression-option'))
         <script type="text/javascript">
-            notification('danger', 'Rôle suprimée');
+            notification('danger', 'Rôle suprimé');
         </script>
     @endif
     @if(Session::has('success-user'))
