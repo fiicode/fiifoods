@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', User::class);
+        //$this->authorize('viewAny', User::class);
 
         $users = User::where([
             ['deleted_at', null],
@@ -52,22 +52,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', User::class);
+        //$this->authorize('create', User::class);
         
         //dd($request);
         $this->validate($request, [
             'name'     => 'required|min:2',
             'username' => 'required|min:3|unique:users',
             'email'    => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6|confirmed',
+            'role' => 'required|integer'
+
         ]);
+        //dd(request('role'));
         $type = 'error-user';
         $message = 'created!';
         if (User::create([
             'name' => $request['name'],
             'username' => $request['username'],
             'email' => $request['email'],
-            'password' => bcrypt($request['password'])
+            'password' => bcrypt($request['password']),
+            'role_id' => $request['role']
         ])) {
             $type = 'success-user';
             $message = 'success';
@@ -86,7 +90,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $this->authorize('view', $user);
+        //$this->authorize('view', $user);
         
         return redirect()->route('users.index')->with('user', $user);
     }
@@ -111,13 +115,14 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $this->authorize('update', $user);
+        //$this->authorize('update', $user);
 
         $this->validate($request, [
             'name'     => 'required|min:2',
             'username' => 'required|min:3',
             'email'    => 'required|email|max:255',
-            'password' => 'required|min:6|confirmed'
+            'password' => 'required|min:6|confirmed',
+            'role' => 'required|integer'
         ]);
 
         if (Auth::user()->id == 1 || Auth::user()->id == $user->id) {
@@ -125,6 +130,7 @@ class UserController extends Controller
             $user->username = $request['username'];
             $user->email = $request['email'];
             $user->password = bcrypt($request['password']);
+            $user->role_id = $request['role'];
             $user->update();
             return redirect()->route('users.index')->with('modification-user', 'utilisateur modifié');
         }
