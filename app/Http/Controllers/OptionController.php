@@ -95,7 +95,18 @@ class OptionController extends Controller
      */
     public function show(Option $option)
     {
-        return redirect()->route('achats.index')->with('unite', $option);
+        if($option->unite) {
+
+            return redirect()->route('achats.index')->with('unite', $option);
+
+        } elseif($option->role) {
+
+            return redirect()->route('users.index')->with('role', $option);
+
+        } else {
+
+            return back();
+        } 
     }
 
     /**
@@ -106,9 +117,22 @@ class OptionController extends Controller
      */
     public function edit(Option $option)
     {
-        $option->deleted_at = Date('Y-m-d H:i:s');
-        $option->update();
-        return redirect()->route('achats.index')->with('supression-option', 'commade supprimé');
+
+        if($option->unite) {
+
+            $option->deleted_at = Date('Y-m-d H:i:s');
+            $option->update();
+            return redirect()->route('achats.index')->with('supression-option', 'Unité supprimée');
+
+        } elseif($option->role) {
+
+            $option->deleted_at = Date('Y-m-d H:i:s');
+            $option->update();
+            return redirect()->route('users.index')->with('supression-option', 'Rôle supprimé');
+
+        } else {
+            return back();
+        }
     }
 
     /**
@@ -120,11 +144,25 @@ class OptionController extends Controller
      */
     public function update(Request $request, Option $option)
     {
-        $type = 'modification-option';
-        $message = "Option modifiée.";
-        $option->name = $request['product_name'];
-        $option->update();
-        return redirect()->route('achats.index')->with($type, $message);
+        if($option->unite)
+        {
+            $type = 'modification-option';
+            $message = "Unité modifiée.";
+            $option->name = $request['product_name'];
+            $option->update();
+            return redirect()->route('achats.index')->with($type, $message);
+
+        } elseif($option->role){
+
+            $type = 'modification-option';
+            $message = "Rôle modifié.";
+            $option->name = $request['product_name'];
+            $option->update();
+            return redirect()->route('users.index')->with($type, $message);
+
+        } else {
+            return back();
+        }
     }
 
     /**
