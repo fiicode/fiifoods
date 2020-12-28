@@ -14,7 +14,7 @@ class AddRoleOtptionsTable extends Migration
     public function up()
     {
         Schema::table('options', function (Blueprint $table) {
-            $table->boolean('role')->after('entite')->default(0);
+            $table->boolean('role')->after('entite')->default(false);
         });
     }
 

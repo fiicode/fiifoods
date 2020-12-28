@@ -43,4 +43,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Depense::class);
     }
+
+    // public function isAdmin()
+    // {
+    //     return Option::select('id', 'name')->where('role', 1)->first();
+
+    // }
 }

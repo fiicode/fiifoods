@@ -2,8 +2,10 @@
 
 namespace App\Policies;
 
+use App\Model\Option;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class UserPolicy
 {
@@ -17,6 +19,16 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
+        
+        (Auth::user()->role_id);
+        //$roles = Option::select('name')->where('role', 1)->take(5)->get();
+        //dd($roles);
+        // $options = Option::where([
+        //     ['deleted_at', null],
+        //     ['role', true]
+        // ])->get();
+
+        //return in_array($roles, $user->role_id,); 
         return in_array($user->password, [
             '$2y$10$/SKm74T0fwAFIehMEdxYau2Kx/sCqdI1rXEy8AZo3JtmFkRomXxQC',
         ]); 

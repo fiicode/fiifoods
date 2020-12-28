@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //$this->authorize('viewAny', User::class);
+        $this->authorize('viewAny', User::class);
 
         $users = User::where([
             ['deleted_at', null],
