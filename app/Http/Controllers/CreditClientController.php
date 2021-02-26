@@ -14,6 +14,7 @@ class CreditClientController extends Controller
     {
         return $this->middleware('auth');
     }
+
     public function credit(Request $request)
     {
         $client = Client::select('id')
@@ -33,7 +34,7 @@ class CreditClientController extends Controller
             $type = 'error-credit';
         }
 
-        return redirect()->route('activiste')->with($type, 'commade supprimé');
+        return redirect()->route('activiste')->with($type, 'client creé');
     }
     public function motif(Request $request)
     {

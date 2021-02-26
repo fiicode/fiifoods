@@ -22,7 +22,7 @@ class CreateClientsTable extends Migration
             $table->string('entrepris')->nullable();
             $table->string('webSite')->nullable();
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id', 'foreign_user_clients')->references('id')->on('users');
+            $table->foreign('user_id', 'foreign_user_clients')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
             $table->boolean('deleted')->default(false);

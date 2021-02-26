@@ -24,7 +24,7 @@ class DepenseController extends Controller
      */
     public function index()
     {
-        $depenses = Depense::where('deleted_at', null)->where('created_at', '>=', Date('Y-m-d') . ' 00:00:00')->get();
+        $depenses = Depense::where('deleted_at', null)->get();
         $entites = Option::where([
             ['deleted_at', null],
             ['entite', true]

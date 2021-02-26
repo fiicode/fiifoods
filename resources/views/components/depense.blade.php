@@ -4,9 +4,11 @@
     <link rel="stylesheet" href="{{asset('assets/css/sweetalert.css')}}">
 @stop
 @section('content')
+    <?php $user = session('user') ?>
     <?php $depense = session('depense') ?>
     <?php $motif = session('motif') ?>
     <?php $entite = session('entite') ?>
+ 
     @if(Session::has('achats'))
         <?php $depenses = session('depenses') ?>
     @endif
@@ -23,7 +25,7 @@
                 <div class="content">
                     @if($depense)
                         <form action="{{route('depense.update', ['depense' => $depense])}}" method="post">
-                            {{method_field('PATCH')}}
+                            @method('PATCH')
                     @else
                         <form action="{{route('depense.store')}}" method="post">
                     
@@ -120,31 +122,34 @@
                 <div class="content">
                     <table class="table table-hover table-striped" id="orderTable">
                         <thead>
-                        <th>ID</th>
-                        <th>Description</th>
-                        <th>Montant</th>
-                        <th>Motif</th>
-                        <th>Entité</th>
-                        <th>Crée le</th>
-                        <th>User</th>
-                        <th>Action</th>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Montant</th>
+                            <th>Motif</th>
+                            <th>Entité</th>
+                            <th>Crée le</th>
+                            <th>User</th>
+                            <th>Action</th>
                         </thead>
                         <tbody>
-                        @foreach($depenses as $depense)
-                            <tr>
-                                <td>{{$depense->id}}</td>
-                                <td>{{$depense->description}}</td>
-                                <td>{{number_format($depense->montant)}}</td>
-                                <td>{{get_option_name($depense->motif)}}</td>
-                                <td>{{get_option_name($depense->entite)}}</td>
-                                <td>{{$depense->created_at->format('d/m/Y H:i')}}</td>
-                                <td>{{$depense->user->username}}</td>
-                                <td>
-                                    <a href="#" class="btn btn-xs btn-primary btn-simple" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></a>
-                                    <a href="#" data-toggle="tooltip" data-placement="left" rel="tooltip" title="Supprimer" class="btn btn-danger btn-xs delete btn-simple" data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @foreach($depenses as $depense)
+                                <tr>
+                                    @if($depense->user_id == auth()->user()->id  || Auth::user()->id == 1 || Auth::user()->id == 2  || (access_sell() && access_order() && access_anal()) )
+                                        <td>{{$depense->id}}</td>
+                                        <td>{{$depense->description}}</td>
+                                        <td>{{number_format($depense->montant)}}</td>
+                                        <td>{{get_option_name($depense->motif)}}</td>
+                                        <td>{{get_option_name($depense->entite)}}</td>
+                                        <td>{{$depense->created_at->format('d/m/Y H:i')}}</td>
+                                        <td>{{$depense->user->username}}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-xs btn-primary btn-simple" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></a>
+                                            <a href="#" data-toggle="tooltip" data-placement="left" rel="tooltip" title="Supprimer" class="btn btn-danger btn-xs delete btn-simple" data-method="DELETE" data-confirm="Etes-vous sûr"><i class="fa fa-trash"></i></a>
+                                        </td>                                    
+                                    @endif
+                                </tr>
+                            @endforeach
+                       
                         </tbody>
                     </table>
 
@@ -154,7 +159,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card">
                 <div class="header">
                     <h5 class="title"><span class="label label-primary">Ajouter un motif</span></h5>
@@ -169,9 +174,9 @@
                                         <input type="text" class="form-control" placeholder="Nom du Motif" name="name" value="{{old('name')}}" required>
                                     </div>
                                     @if($errors->has('name'))
-                                    <span class="text-danger">
-                                        <p style="font-size: 11px">{{$errors->first('name')}}</p>
-                                    </span>
+                                        <span class="text-danger">
+                                            <p style="font-size: 11px">{{$errors->first('name')}}</p>
+                                        </span>
                                     @endif
                                 </div>
                                 <div class="col-md-6">
@@ -185,7 +190,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card">
                 <div class="header">
                     <h5 class="title"><span class="label label-primary">Ajouter une Entité</span></h5>
@@ -253,7 +258,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="header">
-                    <h4 class="title"><span class="label label-primary">Tous les entitées</span></h4>
+                    <h4 class="title"><span class="label label-primary">Toutes les entitées</span></h4>
                 </div>
                 <div class="content">
                     <table class="table table-hover table-striped" id="entiteTable">
@@ -325,6 +330,7 @@
 
         }
     </script>
+
     @if(Session::has('success-motif'))
         <script type="text/javascript">
             notification('success', 'Motif crée');

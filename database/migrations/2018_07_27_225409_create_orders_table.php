@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('orderNum');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id', 'foreign_user_orders')->references('id')->on('users');
+            $table->foreign('user_id', 'foreign_user_orders')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
             $table->boolean('deleted')->default(false);

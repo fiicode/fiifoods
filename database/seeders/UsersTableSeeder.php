@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use \Illuminate\Support\Facades\DB;
+use Illuminate\Database\Seeder;
 class UsersTableSeeder extends Seeder
 {
     /**
@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
             'username' => 'root',
             'email' => 'root@fiifoods.com',
             'password' => '$2y$10$/SKm74T0fwAFIehMEdxYau2Kx/sCqdI1rXEy8AZo3JtmFkRomXxQC',
-            'role_id' => '1'
+            // 'role_id' => '1'
         ]);
     }
 }

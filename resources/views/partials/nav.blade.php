@@ -10,7 +10,7 @@
             {{--<a class="navbar-brand" href="#">Dashboard</a>--}}
         </div>
         <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-left">
+            <ul class="nav navbar-nav navbar-left p-5 m-5">
                 <li>
                     <a href="{{route('home')}}">
                         <i class="fa fa-dashboard"></i>
@@ -32,12 +32,16 @@
                         <li><a href="{{route('ventes.index')}}">Liste des ventes</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="">
-                        <i class="fa fa-search"></i>
-                        <p class="hidden-lg hidden-md">Search</p>
-                    </a>
-                </li>
+                <li>    
+                    <div class="search-box">
+                        {{-- <div class="search-icon"><i class="fa fa-search search-icon"></i></div> --}}
+                        <form action="{{ route('rechercheData') }}" method="POST" class="search-form p-5 m-5">
+                            @csrf
+                            <input type="text" name="search" placeholder="Rechercher"  class="search" autocomplete="on">
+                        </form>
+
+                    </div>
+                </li><br>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

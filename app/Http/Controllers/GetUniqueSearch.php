@@ -21,60 +21,60 @@ class GetUniqueSearch extends Controller
     {
         $foods_name = FoodsName::find($request->foods_name);
         // dd($foods_name);
-        return view('components.showfoods', compact('foods_name'));
+        return view('components.pages.showfoods', compact('foods_name'));
     }
 
     public function showachat(Request $request)
     {
         $achat = Achat::find($request->achat);
-        return view('components.showachat')->with('achat', $achat);
+        return view('components.pages.showachat')->with('achat', $achat);
     }
 
     public function showclient(Request $request)
     {
         $client = Client::find($request->client);
-        return view('components.showclient', compact('client'));
+        return view('components.pages.showclient', compact('client'));
     }
 
     public function showfournisseur(Request $request)
     {
         $fournisseur = Fournisseur::find($request->fournisseur);
-        return view('components.showfournisseur', compact('fournisseur'));
+        return view('components.pages.showfournisseur', compact('fournisseur'));
     }
 
     public function showvente(Request $request)
     {
         $vente = Vente::find($request->vente);
-        return view('components.showvente', compact('vente'));
+        return view('components.pages.showvente', compact('vente'));
     }
 
     public function showdepense(Request $request)
     {
         $depense = Depense::find($request->depense);
-        return view('components.showdepense', compact('depense'));
+        return view('components.pages.showdepense', compact('depense'));
     }
 
     public function showfacture(Request $request)
     {
         $facture = Facture::find($request->facture);
-        return view('components.showfacture', compact('facture'));
+        return view('components.pages.showfacture', compact('facture'));
     }
 
     public function showmembre(Request $request)
     {
         $membre = Membre::find($request->membre);
-        return view('components.showmembre', compact('membre'));
+        return view('components.pages.showmembre', compact('membre'));
     }
 
     public function showoption(Request $request)
     {
         $option = Option::find($request->option);
-        return view('components.showoption', compact('option'));
+        return view('components.pages.showoption', compact('option'));
     }
 
     public function showorder(Request $request)
     {
         $order = Order::find($request->order);
-        return view('components.showorder', compact('order'));
+        return view('components.pages.showorder', compact('order'));
     }
 }

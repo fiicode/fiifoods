@@ -18,11 +18,11 @@ class CreateDepensesTable extends Migration
             $table->string('description')->nullable();
             $table->double('montant')->unsigned();
             $table->integer('entite')->unsigned();
-            $table->foreign('entite', 'foreign_option_entite_depenses')->references('id')->on('options');
+            $table->foreign('entite', 'foreign_option_entite_depenses')->references('id')->on('options')->onDelete('cascade');
             $table->integer('motif')->unsigned();
-            $table->foreign('motif', 'foreign_option_motif_depenses')->references('id')->on('options');
+            $table->foreign('motif', 'foreign_option_motif_depenses')->references('id')->on('options')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id', 'foreign_user_depenses')->references('id')->on('users');
+            $table->foreign('user_id', 'foreign_user_depenses')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
             $table->boolean('deleted')->default(false);

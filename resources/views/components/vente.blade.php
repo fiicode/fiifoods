@@ -33,152 +33,156 @@
     @if(Session::has('ventes'))
         <?php $ventes = session('ventes') ?>
     @endif
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="header">
-                    @if($vente)
-                        <h5 class="title text-primary"><i class="fa fa-cart-arrow-down text-primary"></i> Modification Facture N°{{$vente->factureNum}}</h5>
-                    @else
-                        <h4 class="title"><i class="fa fa-cart-arrow-down text-danger"></i> <span class="label label-danger">Page de vente</span></h4>
-                    @endif
-                </div>
-                <div class="content">
-                    @if($vente)
-                    <form action="{{route('ventes.update', ['vente' => $vente])}}" method="post">
-                    {{method_field('PATCH')}}
-                    @else
-                    <form action="{{route('ventes.store')}}" method="post">
-                    @endif
-                        @csrf
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="form-group {{$errors->has('nom') ? 'has-error' : ''}}">
-                                        <label for=""><i class="fa fa-user text-primary"></i> Nom Client</label>
-                                        @if($vente)
-                                            <input type="text" class="form-control" placeholder="Ex. Amadou" name="nom" id="nom" value="{{old('nom')? old('name') : get_client_name($vente->client_id)}}">
-                                        @else
-                                            <input type="text" class="form-control" placeholder="Ex. Amadou" name="nom" id="nom" value="{{old('nom')}}">
+
+    @if(Auth::user()->id != 2)
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        @if($vente)
+                            <h5 class="title text-primary"><i class="fa fa-cart-arrow-down text-primary"></i> Modification Facture N°{{$vente->factureNum}}</h5>
+                        @else
+                            <h4 class="title"><i class="fa fa-cart-arrow-down text-danger"></i> <span class="label label-danger">Page de vente</span></h4>
+                        @endif
+                    </div>
+                    <div class="content">
+                        @if($vente)
+                        <form action="{{route('ventes.update', ['vente' => $vente])}}" method="post">
+                        {{method_field('PATCH')}}
+                        @else
+                        <form action="{{route('ventes.store')}}" method="post">
+                        @endif
+                            @csrf
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group {{$errors->has('nom') ? 'has-error' : ''}}">
+                                            <label for=""><i class="fa fa-user text-primary"></i> Nom Client</label>
+                                            @if($vente)
+                                                <input type="text" class="form-control" placeholder="Ex. Amadou" name="nom" id="nom" value="{{old('nom')? old('name') : get_client_name($vente->client_id)}}">
+                                            @else
+                                                <input type="text" class="form-control" placeholder="Ex. Amadou" name="nom" id="nom" value="{{old('nom')}}">
+                                            @endif
+                                        </div>
+                                        @if($errors->has('nom'))
+                                            <span class="text-danger">
+                                                <p style="font-size: 11px">{{$errors->first('nom')}}</p>
+                                            </span>
                                         @endif
                                     </div>
-                                    @if($errors->has('nom'))
-                                        <span class="text-danger">
-                                            <p style="font-size: 11px">{{$errors->first('nom')}}</p>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="col-md-2" id="clientPhone">
-                                    <div class="form-group {{$errors->has('phone') ? 'has-error' : ''}}">
-                                        <label for=""><i class="fa fa-phone text-primary"></i> Téléphone</label>
-                                        @if($vente)
-                                            <input type="text" class="form-control" placeholder="623 964 837" name="phone" id="phone" value="{{old('phone') ? old('phone') : get_client_phone($vente->client_id)}}">
-                                        @else
-                                            <input type="text" class="form-control" placeholder="623 964 837" name="phone" id="phone" value="{{old('phone')}}">
+                                    <div class="col-md-2" id="clientPhone">
+                                        <div class="form-group {{$errors->has('phone') ? 'has-error' : ''}}">
+                                            <label for=""><i class="fa fa-phone text-primary"></i> Téléphone</label>
+                                            @if($vente)
+                                                <input type="text" class="form-control" placeholder="623 964 837" name="phone" id="phone" value="{{old('phone') ? old('phone') : get_client_phone($vente->client_id)}}">
+                                            @else
+                                                <input type="text" class="form-control" placeholder="623 964 837" name="phone" id="phone" value="{{old('phone')}}">
+                                            @endif
+                                        </div>
+                                        @if($errors->has('phone'))
+                                            <span class="text-danger">
+                                                <p style="font-size: 11px">{{$errors->first('phone')}}</p>
+                                            </span>
                                         @endif
                                     </div>
-                                    @if($errors->has('phone'))
-                                        <span class="text-danger">
-                                            <p style="font-size: 11px">{{$errors->first('phone')}}</p>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for=""><i class="fa fa-coffee text-primary"></i> Produit</label>
-                                        <select class="form-control select2" name="foodsName" id="foodsName">
-                                            @foreach($produits as $produit)
-                                                @if($vente)
-                                                    <option {{$produit->id == $vente->foods_name_id ? 'selected' : ''}} value="{{$produit->id}}">{{$produit->foodsName}}</option>
-                                                @else
-                                                    <option value="{{$produit->id}}">{{$produit->foodsName}}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for=""><i class="fa fa-coffee text-primary"></i> Produit</label>
+                                            <select class="form-control select2" name="foodsName" id="foodsName">
+                                                @foreach($produits as $produit)
+                                                    @if($vente)
+                                                        <option {{$produit->id == $vente->foods_name_id ? 'selected' : ''}} value="{{$produit->id}}">{{$produit->foodsName}}</option>
+                                                    @else
+                                                        <option value="{{$produit->id}}">{{$produit->foodsName}}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group {{$errors->has('qtt') ? 'has-error' : ''}}">
-                                        <label for="">Quantité</label>
-                                        @if($vente)
-                                            <input type="number" class="form-control" placeholder="Quantité" name="qtt" value="{{old('qtt')? old('qtt'): $vente->qtt}}" required>
-                                        @else
-                                            <input type="number" class="form-control" placeholder="Quantité" name="qtt" value="{{old('qtt')}}" required>
+                                    <div class="col-md-1">
+                                        <div class="form-group {{$errors->has('qtt') ? 'has-error' : ''}}">
+                                            <label for="">Quantité</label>
+                                            @if($vente)
+                                                <input type="number" class="form-control" placeholder="Quantité" name="qtt" value="{{old('qtt')? old('qtt'): $vente->qtt}}" required>
+                                            @else
+                                                <input type="number" class="form-control" placeholder="Quantité" name="qtt" value="{{old('qtt')}}" required>
+                                            @endif
+                                        </div>
+                                        @if($errors->has('qtt'))
+                                            <span class="text-danger">
+                                                <p style="font-size: 11px">{{$errors->first('qtt')}}</p>
+                                            </span>
                                         @endif
                                     </div>
-                                    @if($errors->has('qtt'))
-                                        <span class="text-danger">
-                                            <p style="font-size: 11px">{{$errors->first('qtt')}}</p>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group {{$errors->has('prixAchat') ? 'has-error' : ''}}">
-                                        <label for="">Prix de vente</label>
-                                        @if($vente)
-                                            <input type="text" class="form-control" placeholder="Prix Vente" name="prixAchat" value="{{old('prixAchat')? old('prixAchat') : $vente->pu}}" required>
-                                        @else
-                                            <input type="text" class="form-control" placeholder="Prix Vente" name="prixAchat" value="{{old('prixAchat')}}" required>
+                                    <div class="col-md-2">
+                                        <div class="form-group {{$errors->has('prixAchat') ? 'has-error' : ''}}">
+                                            <label for="">Prix de vente</label>
+                                            @if($vente)
+                                                <input type="text" class="form-control" placeholder="Prix Vente" name="prixAchat" value="{{old('prixAchat')? old('prixAchat') : $vente->pu}}" required>
+                                            @else
+                                                <input type="text" class="form-control" placeholder="Prix Vente" name="prixAchat" value="{{old('prixAchat')}}" required>
+                                            @endif
+                                        </div>
+                                        @if($errors->has('prixAchat'))
+                                            <span class="text-danger">
+                                                <p style="font-size: 11px">{{$errors->first('prixAchat')}}</p>
+                                            </span>
                                         @endif
                                     </div>
-                                    @if($errors->has('prixAchat'))
-                                        <span class="text-danger">
-                                            <p style="font-size: 11px">{{$errors->first('prixAchat')}}</p>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group {{$errors->has('paye') ? 'has-error' : ''}}">
-                                        <label for="">Payé?</label>
-                                        @if($vente)
-                                            <input type="text" class="form-control" placeholder="Payé" name="paye" value="{{old('paye') ? old('paye') : $vente->paye}}">
-                                        @else
-                                            <input type="text" class="form-control" placeholder="Payé" name="paye" value="{{old('paye')}}">
+                                    <div class="col-md-1">
+                                        <div class="form-group {{$errors->has('paye') ? 'has-error' : ''}}">
+                                            <label for="">Payé?</label>
+                                            @if($vente)
+                                                <input type="text" class="form-control" placeholder="Payé" name="paye" value="{{old('paye') ? old('paye') : $vente->paye}}">
+                                            @else
+                                                <input type="text" class="form-control" placeholder="Payé" name="paye" value="{{old('paye')}}">
+                                            @endif
+                                        </div>
+                                        @if($errors->has('paye'))
+                                            <span class="text-danger">
+                                                <p style="font-size: 11px">{{$errors->first('paye')}}</p>
+                                            </span>
                                         @endif
                                     </div>
-                                    @if($errors->has('paye'))
-                                        <span class="text-danger">
-                                            <p style="font-size: 11px">{{$errors->first('paye')}}</p>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group {{$errors->has('factureNum') ? 'has-error' : ''}}">
-                                        <label for="">N°Fac</label>
-                                        @if($vente)
-                                            <input type="text" class="form-control" placeholder="CM01" name="factureNum" value="{{old('factureNum') ? old('factureNum') : $vente->factureNum }}">
-                                        @else
-                                            <input type="text" class="form-control" placeholder="CM01" name="factureNum" value="{{old('factureNum') ? old('factureNum') : 'F' . get_facture_num() }}">
+                                    <div class="col-md-1">
+                                        <div class="form-group {{$errors->has('factureNum') ? 'has-error' : ''}}">
+                                            <label for="">N°Fac</label>
+                                            @if($vente)
+                                                <input type="text" class="form-control" placeholder="CM01" name="factureNum" value="{{old('factureNum') ? old('factureNum') : $vente->factureNum }}">
+                                            @else
+                                                <input type="text" class="form-control" placeholder="CM01" name="factureNum" value="{{old('factureNum') ? old('factureNum') : 'F' . get_facture_num() }}">
+                                            @endif
+                                        </div>
+                                        @if($errors->has('factureNum'))
+                                            <span class="text-danger">
+                                                <p style="font-size: 11px">{{$errors->first('factureNum')}}</p>
+                                            </span>
                                         @endif
                                     </div>
-                                    @if($errors->has('factureNum'))
-                                        <span class="text-danger">
-                                            <p style="font-size: 11px">{{$errors->first('factureNum')}}</p>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="col-md-1">
-                                    <br>
-                                    @if($vente)
-                                        <button type="submit" class="btn btn-primary btn-xs" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></button>
-                                        <a href="{{route('ventes.index')}}" class="btn btn-danger btn-xs" rel="tooltip" title="Fermer"><i class="fa fa-close"></i></a>
-                                    @else
-                                        <button type="submit" class="btn btn-danger" rel="tooltip" title="Enregister"><i class="fa fa-save"></i></button>
-                                    @endif
+                                    <div class="col-md-1">
+                                        <br>
+                                        @if($vente)
+                                            <button type="submit" class="btn btn-primary btn-xs" rel="tooltip" title="Modifier"><i class="fa fa-edit"></i></button>
+                                            <a href="{{route('ventes.index')}}" class="btn btn-danger btn-xs" rel="tooltip" title="Fermer"><i class="fa fa-close"></i></a>
+                                        @else
+                                            <button type="submit" class="btn btn-danger" rel="tooltip" title="Enregister"><i class="fa fa-save"></i></button>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="clearfix"></div>
-                    @if($vente)
-                    </form>
-                    @else
-                    </form>
-                    @endif
+                            <div class="clearfix"></div>
+                        @if($vente)
+                        </form>
+                        @else
+                        </form>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <div class="row">
         <div class="col-md-12">
@@ -186,23 +190,7 @@
                 <div class="header">
                     <h4><i class="pe-7s-cart"></i> <span class="label label-danger">Toutes les ventes</span> <a href="{{route('ventes')}}" class="btn btn-info btn-fill pull-right btn-xs"><i class="fa fa-flask"></i> Toutes les factures</a></h4>
 
-                    {{--<form action="" method="post">--}}
-                        {{--@csrf--}}
-                        {{--<div class="col-md-5 pull-right">--}}
-                            {{--<div class="col-md-3">--}}
-                                {{--<div class="controls">--}}
-                                    {{--<div class="input-prepend input-group">--}}
-                                        {{--<span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>--}}
-                                        {{--<input type="text" style="width: 200px" name="reservation" id="reservation" class="form-control" value="{{Date('m')}}/01/{{Date('Y')}} - {{Date('m')}}/{{'01'}}/{{Date('Y')}}" />--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-md-1 pull-right">--}}
-                                {{--<button type="submit" class="btn btn-group-xs pull-right btn-primary"><i class="fa fa-flask"></i> Filtrer</button>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</form>--}}
-                    {{--<div class="clearfix"></div>--}}
+                  
                 </div>
                 <div class="content">
                     <table class="table table-hover table-striped" id="factureTable">

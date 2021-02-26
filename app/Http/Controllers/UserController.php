@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Model\Option;
 use App\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -20,18 +20,24 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny', User::class);
 
         $users = User::where([
             ['deleted_at', null],
-            ['id', '>', 1]
+            ['id', '>', 2]
         ])->get();
 
         $options = Option::where([
             ['deleted_at', null],
-            ['role', true]
+            ['role', true],
         ])->get();
-        return view('components.user', compact('users', 'options'));
+
+        $roles = Option::where([
+            ['deleted_at', null],
+            ['menu', true],
+            ['user_id', null]
+        ])->get();
+        
+        return view('components.user', compact('users', 'options', 'roles'));
     }
 
     /**
@@ -51,21 +57,18 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //$this->authorize('create', User::class);
-        
-        //dd($request);
+    {        
         $this->validate($request, [
             'name'     => 'required|min:2',
             'username' => 'required|min:3|unique:users',
             'email'    => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
-            'role' => 'required|integer'
-
+            'role' => 'integer',
         ]);
-        //dd(request('role'));
+        
         $type = 'error-user';
         $message = 'created!';
+
         if (User::create([
             'name' => $request['name'],
             'username' => $request['username'],
@@ -89,9 +92,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
-    {
-        //$this->authorize('view', $user);
-        
+    {        
         return redirect()->route('users.index')->with('user', $user);
     }
 
@@ -101,9 +102,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        $user->deleted_at = Date('Y-m-d H:i:s');
+        $user->update();
+        return redirect()->route('users.index')->with('supression-user', 'Utilisateur supprimé');
+        
     }
 
     /**
@@ -115,17 +119,15 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //$this->authorize('update', $user);
-
         $this->validate($request, [
             'name'     => 'required|min:2',
             'username' => 'required|min:3',
-            'email'    => 'required|email|max:255',
+            'email'    => 'email|max:255',
             'password' => 'required|min:6|confirmed',
-            'role' => 'required|integer'
+            'role' => 'integer'
         ]);
 
-        if (Auth::user()->id == 1 || Auth::user()->id == $user->id) {
+        if (Auth::user()->id == 1 || Auth::user()->id == 2 || (access_order() && access_anal() && access_sell()) ) {
             $user->name = $request['name'];
             $user->username = $request['username'];
             $user->email = $request['email'];
@@ -133,6 +135,16 @@ class UserController extends Controller
             $user->role_id = $request['role'];
             $user->update();
             return redirect()->route('users.index')->with('modification-user', 'utilisateur modifié');
+
+        } elseif(access_order() || access_anal() || access_sell()) {
+            $user->name = $request['name'];
+            $user->username = $request['username'];
+            $user->password = bcrypt($request['password']);
+            $user->update();
+            return redirect()->route('users.index')->with('modification-user', 'utilisateur modifié');
+
+        } else {
+            return back();
         }
         return redirect()->route('users.index')->with('error-user', 'utilisateur modifié');
     }
@@ -145,8 +157,6 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
-
         return redirect()->route('users.index')->with('supression-user', 'utilisateur supprimé');
     }
 }

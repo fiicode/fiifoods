@@ -55,7 +55,7 @@ class FournisseurController extends Controller
             ['deleted_at', null]
         ])->get()->first();
         $type = 'error-fournisseur';
-        $message = "commande existe déjà.";
+        $message = "fournisseur existe déjà.";
         if (!$fournisseur) {
             Fournisseur::firstOrcreate([
                 'nom' => $request['nom'],
@@ -63,7 +63,7 @@ class FournisseurController extends Controller
                 'user_id' => Auth::user()->id
             ]);
             $type = 'success-fournisseur';
-            $message = "commande existe déjà.";
+            $message = "fournisseur existe déjà.";
         }
         return redirect()->route('activiste')->with($type, $message);
     }
@@ -89,7 +89,7 @@ class FournisseurController extends Controller
     {
         $fournisseur->deleted_at = Date('Y-m-d H:i:s');
         $fournisseur->update();
-        return redirect()->route('activiste')->with('supression-fournisseur', 'commade supprimée');
+        return redirect()->route('activiste')->with('supression-fournisseur', 'fournisseur édité');
     }
 
     /**
@@ -104,7 +104,7 @@ class FournisseurController extends Controller
         $fournisseur->nom = $request['nom'];
         $fournisseur->phone = $request['phone'];
         $fournisseur->update();
-        return redirect()->route('activiste')->with('modification-fournisseur', 'commade supprimée');
+        return redirect()->route('activiste')->with('modification-fournisseur', 'fournisseur édité');
     }
 
     /**

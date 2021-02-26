@@ -229,7 +229,7 @@ class SearchController extends Controller
         // $searchs = Search::select('search');
 
         return redirect()->route('home')
-            ->with('achats',$achats)
+            ->with('achats', $achats)
             ->with('clients', $clients)
             ->with('depenses', $depenses)
             ->with('factures', $factures)

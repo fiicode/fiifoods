@@ -30,6 +30,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    
     public function foodsName(): HasMany
     {
         return $this->hasMany(FoodsName::class);
@@ -44,9 +45,4 @@ class User extends Authenticatable
         return $this->hasMany(Depense::class);
     }
 
-    // public function isAdmin()
-    // {
-    //     return Option::select('id', 'name')->where('role', 1)->first();
-
-    // }
 }

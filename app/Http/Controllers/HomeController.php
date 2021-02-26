@@ -7,6 +7,7 @@ use App\Model\FoodsName;
 use App\Model\Search;
 use App\Model\Vente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -27,6 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         $foodsNames = FoodsName::select('id')
         ->where([
             ['deleted_at', null],
@@ -68,8 +70,7 @@ class HomeController extends Controller
         }
         $ventes = collect($foodsName);
 
-
-        $searchs = Search::select('search')->latest()->limit(5)->get();
+        $searchs = Search::select('search', 'created_at')->latest()->limit(5)->get();
 
         return view('home', compact('ventes', 'stocks', 'searchs'));
 
@@ -80,5 +81,16 @@ class HomeController extends Controller
         $vente = Vente::select('mtt')->sum('mtt');
         
         return view('components.sample', compact('commande', 'vente'));
+    }
+
+    public function checkautstatus () 
+    {
+        $status = Auth::user()->deleted_at != null ? true : false;
+        if ($status) {
+            Auth::logout();
+        }
+        return response()->json([
+            'status' => $status
+        ]);
     }
 }

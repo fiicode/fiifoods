@@ -17,7 +17,7 @@ class CreateFacturesTable extends Migration
             $table->increments('id');
             $table->string('factureNum');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id', 'foreign_user_factures')->references('id')->on('users');
+            $table->foreign('user_id', 'foreign_user_factures')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
             $table->boolean('deleted')->default(false);

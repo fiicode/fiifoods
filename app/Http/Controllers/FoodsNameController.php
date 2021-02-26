@@ -134,7 +134,7 @@ class FoodsNameController extends Controller
             $foodsName->foodsName = $request['foodsName'];
             $foodsName->update();
             $type = 'modification-foodsName';
-            $message = "FoodsName créée.";
+            $message = "FoodsName créé.";
         }
         return redirect()->route('achats.index')->with($type, $message);
     }

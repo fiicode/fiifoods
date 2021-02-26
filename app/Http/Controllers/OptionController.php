@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Option;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class OptionController extends Controller
@@ -60,7 +61,7 @@ class OptionController extends Controller
                     'user_id' => Auth::user()->id
                 ]);
                 $type = 'success-option';
-                $message = "Option créée.";
+                $message = "Option créée";
             } else {
                 $type = 'error-option';
                 $message = "Option éxiste déjà.";
@@ -69,18 +70,29 @@ class OptionController extends Controller
         }
 
         if ($request['product_name'] && request('role')) {
+
+            $roles = $request->roles;          
+
             $option = Option::where('name', $request['product_name'])->where('deleted_at', null)->get()->first();
             if (!$option) {
-                Option::firstOrcreate([
+                $role = Option::firstOrcreate([
                     'name' => $request['product_name'],
                     'role' => true,
                     'user_id' => Auth::user()->id
                 ]);
+
+                for ($i = 0; $i < count($roles); $i++) {
+                    DB::table('menu_role')->insert([
+                        'role_id' => $role->id,
+                        'menu_id' => $roles[$i],
+                    ]);    
+                }
+
                 $type = 'success-option';
-                $message = "Option créée.";
+                $message = "Option créée";
             } else {
                 $type = 'error-option';
-                $message = "Option éxiste déjà.";
+                $message = "Option éxiste déjà";
             }
             return redirect()->route('users.index')->with($type, $message);
         }
@@ -96,15 +108,12 @@ class OptionController extends Controller
     public function show(Option $option)
     {
         if($option->unite) {
-
             return redirect()->route('achats.index')->with('unite', $option);
 
         } elseif($option->role) {
-
             return redirect()->route('users.index')->with('role', $option);
 
         } else {
-
             return back();
         } 
     }
@@ -117,7 +126,6 @@ class OptionController extends Controller
      */
     public function edit(Option $option)
     {
-
         if($option->unite) {
 
             $option->deleted_at = Date('Y-m-d H:i:s');

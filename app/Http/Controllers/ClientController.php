@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -50,7 +51,7 @@ class ClientController extends Controller
             Client::firstOrcreate([
                 'nom' => $request['nomClient'],
                 'phone' => isset($request['phoneClient']) ? $request['phoneClient'] : null,
-                'user_id' => \Auth::user()->id
+                'user_id' => Auth::user()->id
             ]);
             $type = 'success-client';
             $message = "commande existe déjà.";
@@ -94,7 +95,7 @@ class ClientController extends Controller
         $client->nom = $request['nomClient'];
         $client->phone = $request['phoneClient'];
         $client->update();
-        return redirect()->route('activiste')->with('modification-client', 'client supprimé');
+        return redirect()->route('activiste')->with('modification-client', 'client modifié');
     }
 
     /**

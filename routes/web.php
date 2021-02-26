@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('/check-auth-status', 'HomeController@checkautstatus')->name('checkautstatus');
     Route::get('/home', 'HomeController@index')->name('home');
     Route::post('/recherche', 'SearchController@store')->name('rechercheData');
     Route::get('/activiste', 'ActivisteController@index')->name('activiste');
